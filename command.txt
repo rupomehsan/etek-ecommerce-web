@@ -1,0 +1,167 @@
+---user management -----
+---user management -----
+
+php artisan make:module UserManagement/User [name:string-50,user_name:string-50,role_serial:tinyint,email:string-50,phone_number:string-20,photo:string-100,password:string-100,role_id:bigint,is_blocked:tinyint,no_of_attempt:int]
+php artisan make:module UserManagement/UserAddress [user_id:bigint,is_shipping:tinyint,is_billing:tinyint,address_types:enum-office.pickup_point.store,address:string,country_id:int,state_division_id:int,district_id:int,station_id:int,city_id:int,zip_code:string,is_present_address:tinyint,is_permanent_address:tinyint]
+php artisan make:module UserManagement/UserAddressContactPerson [user_id:bigint,user_address_id:bigint,full_name:string,phone_number:string-20,email:string-30]
+
+php artisan make:module UserManagement/UserCustomerType [title:string-50]
+php artisan make:module UserManagement/UserCustomerInformation [customer_type_id:bigint,website:string,client_id:bigint,user_id:bigint]
+
+php artisan make:module UserManagement/UserSupplierType [title:string-50]
+php artisan make:module UserManagement/UserSupplierInformation [supplier_type_id:bigint,email:string-30,mobile_number:string-20,supplier_id:bigint,user_id:bigint]
+
+php artisan make:module UserManagement/UserRetailerType [title:string-50]
+php artisan make:module UserManagement/UserRetailerInformation [user_retailer_type_id:bigint,email:string-30,mobile_number:string-20,retailer_id:bigint,user_id:bigint]
+
+php artisan make:module UserManagement/UserEmployeeInformation [gender:enum-male.female.other,nick_name:string,date_of_birth:datetime,user_id:bigint,employee_code:string]
+
+---user management -----
+---- END -----
+
+---Location Management -----
+---Location Management -----
+
+php artisan make:module LocationManagement/Country [name:string-50,country_code:string-20,country_short_code:string-20,flag_url:string-200,country_symbol:json,serial:int]
+php artisan make:module LocationManagement/StateDivision [country_id:bigint,name:string-50]
+php artisan make:module LocationManagement/District [country_id:bigint,state_division_id:bigint,name:string-30]
+php artisan make:module LocationManagement/Station [country_id:bigint,,state_division_id:bigint,district_id:bigint,name:string-100,post_office:string-100,post_code:string-100]
+
+---Location Management -----
+---- END -----
+
+---product management -----
+---product management -----
+
+php artisan make:module ProductManagement/ProductCategoryGroup [title:string-50,image:string-200]
+php artisan make:module ProductManagement/ProductCategory [title:string-50,parent_id:intiger,product_category_group_id:bigint,serial:intiger,image:string-200]
+php artisan make:module ProductManagement/ProductMenufacturer [title:string-50,serial:intiger,image:string-200]
+php artisan make:module ProductManagement/ProductBrand [title:string-50,serial:intiger,image:string-200]
+php artisan make:module ProductManagement/Product [product_category_group_id:bigint,is_featured:tinyint,is_new:tinyint,is_available:tinyint,is_pre_order:tinyint,is_up_coming:tinyint,is_emi_support:tinyint,title:string,type:enum-service.product,short_description:text,description:longText,product_menufecturer_id:intiger,product_brand_id:intiger,sku:string-50,product_unit_id:intiger,alert_quantity:intiger,saller_points:string,is_returnable:tinyint,expiration_days:datetime,price_type:enum-single.variant,purchase_price:float,tax_type:enum-inclusive.exclusive,tax_amount:float,customer_sales_price:float,retailer_sales_price:float,minimum_sale_price:float,maximum_sale_price:float,is_featured:float,discount_type:enum-off.percent.flat,discount_amount:float]
+php artisan make:module ProductManagement/ProductBarCode [product_id:bigint,barcode_image:string-200,price:float,title:string-100,company_name:string-100]
+php artisan make:module ProductManagement/ProductUnit [product_unit_group_id:bigint,product_id:bigint,title:string]
+php artisan make:module ProductManagement/ProductUnitGroup [title:string-50]
+php artisan make:module ProductManagement/ProductVarient [product_varient_group_id:bigint,title:string,is_required:tinyint]
+php artisan make:module ProductManagement/ProductVarientGroup [title:string]
+php artisan make:module ProductManagement/ProductVarientValue [product_varient_group_id:bigint,product_varient_id:bigint,title:string,is_default:tinyint]
+php artisan make:module ProductManagement/ProductCategoryWiseAdvertise [category_id:bigint,title:string-100,is_promition:tinyint,image:string-100,start_date:datetime,end_data:datetime]
+
+---product management -----
+---- END -----
+
+
+---Purchage Management -----
+---Purchage Management -----
+php artisan make:module PurchageManagement/PurchaseOrder [product_wearhouse_id:bigint,supplier_id:bigint,date:datetime,reference:string-100,discount_on_all:float,discount_on_all_type:enum-fixed.percentage,subtotal:float,total:float]
+php artisan make:module PurchageManagement/PurchaseReturnOrder [product_wearhouse_id:bigint,supplier_id:bigint,product_id:bigint,date:datetime,reference:string-100,discount_on_all:float,discount_on_all_type:enum-fixed.percentage,subtotal:float,total:float]
+
+---Purchage Management -----
+---- END -----
+
+
+---Sales Management-----
+---Sales Management-----
+php artisan make:module SalesManagement/SalesOrder [product_wearhouse_id:intiger,user_id:intiger,product_id:initiger,date:date,order_id:string-100,discount_on_all:float,discount_on_all_type:enum-fixed.percentage,is_quotation:tinyint,is_order:tinyint,is_invoiced:tinyint,is_delivered:tinyint,is_paid:tinyint,order_type:enum-quotation.ordered.invoiced,order_status:enum-pending.accepted.processing.on_the_way.delivered.cancelled.refunded,total:float,subtotal:float,paid_amount:float,source:enum-pos.ecommerce.retail_order]
+php artisan make:module SalesManagement/SalesReturn [product_wearhouse_id:intiger,user_id:intiger,product_id:initiger,date:date,order_id:string-100,discount_on_all:float,discount_on_all_type:enum-fixed.percentage,is_quotation:tinyint,is_order:tinyint,is_invoiced:tinyint,is_delivered:tinyint,is_paid:tinyint,order_type:enum-quotation.ordered.invoiced,order_status:enum-pending.accepted.processing.on_the_way.delivered.cancelled.refunded,total:float,subtotal:float,paid_amount:float,source:enum-pos.ecommerce.retail_order]
+php artisan make:module SalesManagement/SalesQuotationOrder [product_wearhouse_id:intiger,user_id:intiger,product_id:initiger,date:date,order_id:string-100,discount_on_all:float,discount_on_all_type:enum-fixed.percentage,is_quotation:tinyint,is_order:tinyint,is_invoiced:tinyint,is_delivered:tinyint,is_paid:tinyint,order_type:enum-quotation.ordered.invoiced,order_status:enum-pending.accepted.processing.on_the_way.delivered.cancelled.refunded,total:float,subtotal:float,paid_amount:float,source:enum-pos.ecommerce.retail_order]
+php artisan make:module SalesManagement/SalesInvoice [order_id:string-100,date:date,user_type:enum-ecommerce.retail_order,user_id:intiger,is_delivered:tinyint,order_status:enum-pending.accepted.processing.on_the_way.delivered.cancelled.refunded,user_address_id:bigint,delivery_method:enum-pickup.courier.home_delivery,delivery_address:string,delivery_charge:float,additional_charge:float,product_coupon_id:bigint,coupon_discount:float,subtotal:float,discount:float,discount_type:enum-fixed.percentage,total:float,is_paid:tinyint,paid_amount:float,payment_id:string-20,payment_method:string-20]
+php artisan make:module SalesManagement/SalesEcommerceOrder [order_id:string-100,date:date,user_type:enum-ecommerce.retail_order,user_id:bigint,is_delivered:tinyint,order_status:enum-pending.accepted.processing.on_the_way.delivered.cancelled.refunded,user_address_id:bigint,delivery_method:enum-pickup.courier.home_delivery,delivery_address_id:bigint,subtotal:float,delivery_charge:float,additional_charge:float,product_coupon_id:bigint,coupon_discount:float,discount:float,discount_type:enum-fixed.percentage,total:float,is_paid:tinyint,paid_amount:float,paid_status:enum-due.pertially_paid.paid,payment_id:string-20,payment_method:string-20]
+
+---Sales Management-----
+---- END -----
+
+---Stock Management-----
+---Stock Management-----
+php artisan make:module StockManagement/ProductStock [date:datetime,stock_type:enum-initial.purchase.sales.return.waste,product_id:bigint,qty:int,bill_receipt_no:string-50,product_wearhouse_id:bigint,purchase_order_id:bigint,purchase_return_id:bigint,sales_order_id:bigint,sales_return_id:bigint]
+php artisan make:module StockManagement/ProductWearHouse [title:string-150,image:string-200,product_wearhouse_branch_id:bigint]
+php artisan make:module StockManagement/ProductWearHouseBranch [title:string-150]
+
+---Stock Management-----
+---- END -----
+
+---Vat Management-----
+---Vat Management-----
+php artisan make:module VatManagement/Vat [title:string,percentage:float]
+php artisan make:module VatManagement/VatGroup [title:string]
+
+---Vat Management-----
+---- END -----
+
+
+---- hrm management-----
+---- hrm management-----
+
+php artisan make:module HrmManagement user_employee_work_informations [user_id:bigint,joining_date:datetime,payslip_generation_date:datetime,confirmation_date:datetime,department_id:bigint,user_employee_job_position_id:bigint,user_employee_job_title_id:bigint,user_employee_office_location_id:bigint,user_employee_type_id:bigint,in_time:datetime,out_time:datetime,is_allow_flexible_time:datetime,flexible_time_minutes:string,re_joining_date:datetime,appointment_letter:datetime]
+php artisan make:module HrmManagement user_employee_job_titles [title:string-100,description:text]
+php artisan make:module HrmManagement user_employee_work_departments [department_code:string,department_name:string-50,parent_department:bigint,in_charge:string,description:text]
+php artisan make:module HrmManagement user_employee_office_locations [location_name:string,address:string,country_id:bigint,state_division_id:bigint,district_id:bigint,station_id:bigint,description:text]
+php artisan make:module HrmManagement user_employee_types [title:string-50]
+php artisan make:module HrmManagement user_employee_job_positions [title:string-50,position_type:enum-shared.single,head_count:int,payroll_id:bigint,supervisor_id:bigint]
+php artisan make:module HrmManagement user_employee_payroll [title:string-50,payment_type:enum-cash.bkash.nagad.bank.debit_card.credit_card]
+php artisan make:module HrmManagement user_employee_payroll_periods [user_employee_payroll_id:bigint,period_type:enum-annual.bi-annual.tri-annual.quarterly.monthly.weekly]
+php artisan make:module HrmManagement user_employee_attendances [user_id:bigint,date:date,in_time:time,out_time:time,grace_time:int,working_hours:bigint:,attendance_status:enum-present.absent,late_time:time,over_time:time,early_out_time:time]
+php artisan make:module HrmManagement user_employee_dependents [user_id:bigint,full_name:string-50,relationship:text,date_of_birth:datetime,email:string-50,phone_number:string-20,nid:string]
+php artisan make:module HrmManagement user_employee_references [user_id:bigint,reference_name:string,department:string,designation:string,address:string,company:string,relationship:text,phone_number:string-20,email:string-50]
+php artisan make:module HrmManagement user_employee_resignations [user_id:bigint,is_resignation:tinyint,is_termination:tinyint,resignation_letter:string,letter_received_date:datetime,resign_date:datetime,applied_resign_rules:bigint,resignation_status:enum-present.absent,reason_for_resignation:text,good_or_bad_activities:enum-good.bad,is_resigned_applied:tinyint]
+php artisan make:module HrmManagement user_employee_resign_rules [title:string]
+php artisan make:module HrmManagement user_employee_educations [user_id:bigint,qualification:string,major:string,institution:string,board:string,passing_year:int,grade_cgpa:float]
+php artisan make:module HrmManagement user_employee_experiences [user_id:bigint,company_name:string,designation:string,location:string,joining_date:datetime,resign_date:datetime,responsibilities:text]
+php artisan make:module HrmManagement user_payslips [user_id:bigint,month:datetime,payslip_token:string-30,payslip_status:enum-paid.unpaid,account_transaction_id:bigint]
+php artisan make:module HrmManagement user_payslip_values [month:datetime,user_id:bigint,user_payslip_id:bigint,user_employee_payhead_id:bigint,unit:enum-percentage.amount,value:float,addition:float,deduction:float]
+php artisan make:module HrmManagement user_employee_payroll_period_type_bill_periods [user_employee_payroll_period_id:bigint,period_name:string,start_date:datetime,end_date:datetime,issue_date:datetime]
+php artisan make:module HrmManagement user_employee_payroll_payhead_values [user_employee_payroll_id:bigint,user_employee_payhead_id:bigint,value_type:enum-percentage.amount,user_employee_payhead_type:enum-addition.deduction]
+php artisan make:module HrmManagement user_employee_payhead [title:string,head_type:enum-addition.deduction,description:text,is_default:tinyint]
+
+---- hrm management-----
+---- END -----
+
+
+--- leave management-----
+--- leave management-----
+
+php artisan make:module LeaveManagement user_employee_leave_types [title:string,short_code:string,display_order:int,description:string,validity_start_date:datetime,validity_end_date:datetime]
+php artisan make:module LeaveManagement user_employee_leave_type_applicable_for_positions [user_employee_leave_type_id:bigint,user_employee_job_position_id:bigint,total_days:int]
+php artisan make:module LeaveManagement user_employee_holidays [title:string-50,description:string,number_of_days:int,heighlight_color:string]
+php artisan make:module LeaveManagement user_employee_leave_type_applicable_fors [user_employee_leave_type_id:bigint,user_employee_job_position_id:bigint,total_days:int]
+php artisan make:module LeaveManagement user_employee_leave_applications [user_id:bigint,leave_type_id:bigint,from_date:datetime,to_date:datetime,reson_for_leave:string, application_file:string]
+
+--- leave management-----
+--- END -----
+
+
+--- account and payments---
+--- account and payments---
+
+php artisan make:module AccountAndPayments purchase_payments [purchase_order_id:bigint,account_id:bigint,account_number_id:bigint,amount:float,supplier_id:bigint,date:datetime,payment_type:enum-bill.advanced,account_transaction_id]
+php artisan make:module AccountAndPayments purchase_return_payments [purchase_return_order_id:bigint,account_id:bigint,account_number_id:bigint,amount:float,supplier_id:bigint,date:datetime,account_transaction_id:bigint]
+php artisan make:module AccountAndPayments sale_payments [sale_order_id:bigint,account_id:bigint,account_number_id:bigint,amount,user_id:bigint,payment_type:enum-bill.advanced,account_transaction_id:bigint]
+php artisan make:module AccountAndPayments account_transaction_logs [tr_id:bigint,date:datetime,account_id:bigint,account_number_id:bigint,account_head_id:bigint,amount:float,type:enum-debit.credit,account_expenditure_group_id:bigint,account_expenditure_id:bigint,user_id:bigint]
+php artisan make:module AccountAndPayments account_transactions [account_transaction_log_id:bigint,transaction_media_id:string-20,date:datetime,title:string-50,description:string,account_id:bigint,account_number_id:bigint,account_head_id:bigint,amount:float,account_expenditure_id:bigint,user_id:bigint,transaction_type:enum-debit.credit,expense_type:enum-refund.official,income_type:enum-pos.ecommerce.retail_payment.official]
+php artisan make:module AccountAndPayments account_expenditure_groups [title:string-50,description:string]
+php artisan make:module AccountAndPayments account_expenditures [account_expenditure_group_id:bigint,title:string-50,description:string]
+php artisan make:module AccountAndPayments account_heads [title:string-50,description:string,date:datetime]
+php artisan make:module AccountAndPayments accounts [account_head_id:bigint,title:string-50,description:string,transaction_start_date:datetime,account_transaction_type:enum-income.expense]
+php artisan make:module AccountAndPayments account_numbers [account_head_id:bigint,account_id:bigint,account_number:int,account_name:string,amount:float,opening_balance:int,account_transaction_id:bigint]
+php artisan make:module AccountAndPayments sale_return_payments [sale_return_order_id:bigint,account_id:bigint,account_number_id:bigint,amount:float,user_id:bigint,payment_type:enum-bill.advanced,account_transaction_id:bigint]
+php artisan make:module AccountAndPayments account_transaction_attachments [account_transaction_id:bigint,attachment:string]
+
+
+--- account and payments---
+--- END---
+
+--- BannerManagement---
+--- BannerManagement---
+
+php artisan make:module BannerManagement/HomeBanner [title:string-100,image:string-100,short_des:string-100,offer_title:string-50,button_url:string-150]
+php artisan make:module BannerManagement/HomeSideBanner [banner_one:string-150,banner_two:string-150,banner_three:string-150,banner_four:string-150]
+
+--- BannerManagement---
+--- END---
+
+--- Blog Management---
+--- Blog Management---
+
+php artisan make:module BlogManagement/BlogCategory [title:string-100,parent_id:bigint,image:string-100]
+ php artisan make:module BlogManagement/Blog [title:string-100,description:longtext,tags:longtext,publish_date:data,writer:string-50,meta_title:string-100,meta_description-string-100,meta_keywords:string-200,thumbnail_image:100,image:json,blog_type:string-20,video_url:string-150,privecy_status:enum-public.private]
+--- Blog Management---
+--- END---

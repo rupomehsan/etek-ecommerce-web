@@ -1,0 +1,39 @@
+prduct category
+    -> is_nav
+    -> is_featured
+
+product category wise advertise : new table, if multiple then slide show
+
+product_varient_values
+    -> title sathe r ekta field lagbe
+        ex: title = red, value = color code
+
+relation_with
+    category->brand
+    category->varient_values [ variet_id, value_id ]
+
+product_varient_table : ekta column barbe
+    varient_type
+        ->text
+        ->color
+        ->checkbox
+        ->radio
+        ->input
+
+
+kicu featured product selected kore deya
+
+
+database e kono varient nai
+$varients = [
+    "size" => ['xs', 'sm', 'md', 'lg', 'xl', 'xxl', 'xxxl', '4xl', '5xl', '6xl'],
+    "material" => ['cotton', 'polyester', 'wool', 'silk', 'linen'],
+    "pattern" => ['solid', 'striped', 'checked', 'printed', 'dotted'],
+    "brand" => ['brandA', 'brandB', 'brandC', 'brandD', 'brandE'],
+    "color" => ['black', 'white', 'silver', 'gold', 'blue', 'red', 'green', 'purple', 'gray', 'pink'],
+    "storage" => ['64GB', '128GB', '256GB', '512GB', '1TB', '2TB'],
+    "screen_size" => ['5.5"', '6.1"', '6.5"', '6.7"', '7"', '7.5"', '8"', '10"', '12"', '13.3"', '15.6"', '17.3"'],
+    "battery" => ['3000mAh', '4000mAh', '4500mAh', '5000mAh', '6000mAh'],
+    "resolution" => ['720p', '1080p', '1440p', '4K', '8K'],
+    "os" => ['Android', 'iOS', 'Windows', 'MacOS', 'Linux'],
+];
