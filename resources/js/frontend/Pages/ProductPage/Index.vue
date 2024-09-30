@@ -36,27 +36,9 @@
                 </div>
             </div>
         </section>
-        <section class="category_page_header" v-if="false">
-            <div class="custom-container">
-                <h2 class="page_header_title" v-if="category.page_header_title">
-                    {{ category.page_header_title }}
-                </h2>
-                <div
-                    class="page_header_description"
-                    v-if="category.page_header_description"
-                    v-html="category.page_header_description"
-                ></div>
-                <ul class="page_sub_category_lists">
-                    <li v-for="sub in childrens" :key="sub.id">
-                        <Link :href="`/products/${sub.slug}`">
-                            {{ sub.title }}
-                        </Link>
-                    </li>
-                </ul>
-            </div>
-        </section>
+
         <section class="section-big-pt-space ratio_asos b-g-light">
-            <div class="collection-wrapper">
+            <div class="collection-wrapper" bo>
                 <div class="custom-container">
                     <div class="row">
                         <div
@@ -91,19 +73,23 @@
                             <div class="page-main-content">
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <div class="top-banner-wrapper mb-2">
+                                        <div
+                                            class="top-banner-wrapper mb-2"
+                                           v-if="query_param !== 'search'"
+                                        >
                                             <skeleton
                                                 v-if="preloader"
                                                 :width="`100%`"
                                                 :height="`300px`"
                                             ></skeleton>
                                             <img
-                                                v-else-if="advertise"
+                                                v-else-if="category.image"
                                                 :src="
-                                                    load_image(advertise?.image)
+                                                    load_image(category?.image)
                                                 "
+                                                style="max-height: 200px"
                                                 class="img-fluid"
-                                                :alt="advertise?.title"
+                                                :alt="category?.title"
                                             />
                                             <img
                                                 v-else
@@ -298,7 +284,7 @@
                                                                                 link.url
                                                                             "
                                                                             @click.prevent="
-                                                                                global_search(
+                                                                                load_product(
                                                                                     link.url
                                                                                 )
                                                                             "

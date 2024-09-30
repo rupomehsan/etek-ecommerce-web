@@ -236,7 +236,7 @@ class Model extends EloquentModel
             }
         }
 
-        return $salesPrice; // Return the original price if no discount is applicable
+        return $salesPrice ?? 0; // Return the original price if no discount is applicable
     }
 
     public function getB2bDiscountPriceAttribute()

@@ -24,25 +24,20 @@ class EcommerceOrder
             // $userType = auth()->user()?->role?->name;
             $user = self::$userModel::where('id', auth()->user()->id)->with('role')->first();
             $userType = $user->role->name;
+            $Price = 0;
 
             $cartItems = self::$cartModel::with(['product', 'product.medicine_product_verient'])
                 ->where('user_id', auth()->id())
                 ->get();
 
             $cartSubtotal = $cartItems->sum(function ($cartItem) use ($userType) {
-                if ($cartItem->product_type == 'medicine') {
-                    $medicinePrice = $userType == config('role.customer') ? $cartItem->product->medicine_product_verient->pv_b2c_price : $cartItem->product->medicine_product_verient->pv_b2b_price;
-                    return $medicinePrice * $cartItem->quantity;
-                } else {
-                    return $cartItem->product->current_price * $cartItem->quantity;
-                }
-                return 0;
+                $Price = $userType == config('role.customer') ? $cartItem->product->b2c_discount_price : $cartItem->product->b2b_discount_price;
+                return $Price * $cartItem->quantity ?? 0;
             });
 
             $total = $cartSubtotal;
 
             // dd($orderDetails, auth()->user()->toArray(), $cartItems->toArray(), $cartSubtotal);
-            $station = DB::table('location_stations')->where('id', $request->station_id)->first();
             $delivery_address_details = [
                 "user_name" => $request->user_name,
                 "phone" => $request->phone,
@@ -50,7 +45,7 @@ class EcommerceOrder
                 "address" => $request->address,
                 "division_name" => DB::table('location_state_divisions')->where('id', $request->state_division_id)->first()?->name,
                 "district_name" => DB::table('location_districts')->where('id', $request->district_id)->first()?->name,
-                "station_name" => $station?$station->name:$request->station_id,
+                "station_name" => DB::table('location_stations')->where('id', $request->station_id)->first()?->name,
             ];
 
             $orderInfo = [
@@ -60,6 +55,7 @@ class EcommerceOrder
                 "user_id" => auth()->user()->id,
                 "is_delivered" => 0,
                 "delivery_address_details" => ($delivery_address_details),
+                "present_address" =>  $request->present_address,
                 "order_status" => 'pending',
                 "delivery_method" => "home_delivery",
                 "delivery_charge" => $orderDetails["delivery_charge"] ?? 0,
@@ -80,18 +76,18 @@ class EcommerceOrder
             if ($order = self::$model::create($orderInfo)) {
                 $product_items = "";
                 foreach ($cartItems as $key => $cartItem) {
-                    $price = $cartItem->product->type == 'medicine' ? $cartItem->product->medicine_price : $cartItem->product->current_price;
+                    $Price = $userType == config('role.customer') ? $cartItem->product->b2c_discount_price : $cartItem->product->b2b_discount_price;
 
                     self::$orderProductmodel::create([
                         'sales_ecommerce_order_id' => $order->id,
                         'product_id' => $cartItem->product_id,
-                        'product_price' => $price,
+                        'product_price' => $Price,
                         'product_name' => $cartItem->product->title,
                         'discount_type' => null,
                         'tax' => null,
-                        'price' => $price,
+                        'price' => $Price,
                         'qty' => $cartItem->quantity,
-                        'subtotal' => $cartItem->quantity * $price,
+                        'subtotal' => $order->subtotal,
                         'tax_total' =>  0,
                         'total' => $order->total,
                     ]);

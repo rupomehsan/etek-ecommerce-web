@@ -19,6 +19,8 @@ class GetInitialProductDetails
                 'product_brand:id,title,image',
                 'product_region',
                 'product_region.country',
+                'medicine_generic:id,title',
+                'product_unit:id,title',
             ];
 
             $fields = request()->input('fields') ?? ['*'];

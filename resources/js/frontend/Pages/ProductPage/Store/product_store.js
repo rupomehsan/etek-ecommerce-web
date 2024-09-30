@@ -120,7 +120,7 @@ export const product_store = defineStore("product_store", {
             let response;
             if (url) {
                 // If a URL is provided, make a request to that URL
-                response = await axios.get(url + `?${fieldsQuery}`);
+                response = await axios.get(url + `&${fieldsQuery}`);
             } else {
                 // Create the base URL
                 const baseUrl = `${location.origin}/api/v1/get-all-products-by-category-id/${this.slug}`;
@@ -155,17 +155,23 @@ export const product_store = defineStore("product_store", {
                 top: 0,
                 behavior: 'smooth'
             });
+
+            const fieldsQuery = this.fields.map((field, index) => `fields[${index}]=${field}`).join('&');
+
+            let response;
+
             if (url) {
-                let response = await axios.get(url);
+                response = await axios.get(url + `&${fieldsQuery}&limit=${this.limit}`);
+            } else {
+                response = await axios.get(`/get-all-top-products-offer-by-offer-id/${this.slug}&${fieldsQuery}&limit=${this.limit}`);
+            }
+
+            if (response.data.status === "success") {
                 this.products = response.data?.data?.data
                 this.category = response.data?.data?.productOfferDetails;
-            } else {
-                let response = await axios.get(`/get-all-top-products-offer-by-offer-id/${this.slug}`)
-                if (response.data.status === "success") {
-                    this.products = response.data?.data?.data
-                    this.category = response.data?.data?.productOfferDetails;
-                }
+
             }
+
 
             this.preloader = false;
         },
@@ -176,9 +182,6 @@ export const product_store = defineStore("product_store", {
                 top: 0,
                 behavior: 'smooth'
             });
-
-
-
 
             const fieldsQuery = this.fields.map((field, index) => `fields[${index}]=${field}`).join('&');
             if (url) {
@@ -195,6 +198,22 @@ export const product_store = defineStore("product_store", {
 
             this.preloader = false;
 
+        },
+
+
+        load_product: async function (link) {
+            if (this.query_param == 'search') {
+                this.global_search(link)
+            }
+            if (this.query_param == 'category') {
+                this.get_products_by_category_id(link)
+            }
+            if (this.query_param == 'top-offer') {
+                this.get_all_top_offer_products_by_offer_id(link)
+            }
+            if (this.query_param == 'category-group') {
+                this.get_all_products_and_single_group_by_category_group_id(link)
+            }
         },
 
 
@@ -221,8 +240,6 @@ export const product_store = defineStore("product_store", {
             if (this.query_param == 'category-group') {
                 this.get_all_products_and_single_group_by_category_group_id()
             }
-
-
         },
         set_bread_cumb: function () {
             function getParentsArray(obj, seenObjects = new Set()) {

@@ -65,6 +65,7 @@ export default {
         submitHandler() {
             let formData = event.target
             this.store_news_letter_subscriber(formData)
+            event.target.reset()
         },
 
     }
