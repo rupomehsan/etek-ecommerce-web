@@ -35,6 +35,7 @@ export const product_store = defineStore("product_store", {
             "short_description",
             "customer_sales_price",
             "discount_type",
+"retailer_sales_price",
             "discount_amount",
             "product_brand_id",
             "sku",

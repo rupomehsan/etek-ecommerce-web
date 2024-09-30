@@ -50,7 +50,7 @@
                     <div>new</div>
                 </div>
                 <div class="on-sale" v-if="product.discount_amount > 0">
-                    save {{ product.discount_amount }} ৳
+                    save {{ product.discount_type == 'percent' ? product.discount_amount : product.discount_amount }} {{ product.discount_type == 'percent' ? '%' : '৳' }}
                 </div>
             </div>
             <div class="product-detail">

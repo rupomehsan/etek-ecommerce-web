@@ -25,6 +25,7 @@ export const use_home_page_store = defineStore("use_home_page_store", {
             "title",
             "customer_sales_price",
             "discount_type",
+            "retailer_sales_price",
             "discount_amount",
             "product_brand_id",
             "sku",

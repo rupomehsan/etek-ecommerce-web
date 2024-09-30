@@ -21,17 +21,20 @@ class Model extends EloquentModel
     static $ProductReviewImageModel = \App\Modules\WebsiteApi\ProductReview\Models\ReviewImageModel::class;
     static $MedicineProductModel = \App\Modules\ProductManagement\Product\Models\MedicineProductModel::class;
     static $MedicineProductVerientModel = \App\Modules\ProductManagement\Product\Models\MedicineProductVerientModel::class;
+    static $MedicineGenericModel = \App\Modules\ProductManagement\ProductGenerics\Models\Model::class;
+    static $productUnitModel = \App\Modules\ProductManagement\ProductUnit\Models\Model::class;
 
 
     protected $table = "products";
     protected $guarded = [];
     protected $appends = [
+        "b2b_discount_price",
+        "b2c_discount_price",
         'current_price',
         'amount_in_percent',
         'is_discount',
         'average_rating',
         'total_views',
-        'medicine_price',
     ];
     protected $casts = [
         'specifications' => 'array'
@@ -110,6 +113,14 @@ class Model extends EloquentModel
     {
         return $this->hasOne(self::$MedicineProductVerientModel, 'product_id', 'id');
     }
+    public function medicine_generic()
+    {
+        return $this->belongsTo(self::$MedicineGenericModel, 'product_medicine_generic_id',  'id');
+    }
+    public function product_unit()
+    {
+        return $this->belongsTo(self::$productUnitModel, 'product_unit_id',  'id');
+    }
 
 
     public function related_compare_products()
@@ -168,22 +179,7 @@ class Model extends EloquentModel
         return $this->product_reviews()->avg('rating') ?? 0;
     }
 
-    public function getMedicinePriceAttribute()
-    {
-        $price = 0;
-        $userType = auth()->user() ?? auth()->user()->role->name ?? 'customer';
-        if ($this->type == "medicine") {
-            // $varient = $this->load('medicine_product_verient:product_id,id,pv_b2c_discount_percent,pv_b2c_price,pv_b2c_mrp,pv_b2b_discount_percent,pv_b2b_price,pv_b2b_mrp');
-            $varient = $this->medicine_product_verient;
-            if ($userType == 'customer') {
-                $price =  $varient->pv_b2c_price;
-            } else {
-                $price =  $varient->pv_b2b_price;
-            }
-        }
 
-        return $price;
-    }
 
     public function getCurrentPriceAttribute()
     {
@@ -226,5 +222,30 @@ class Model extends EloquentModel
         } else {
             return false;
         }
+    }
+
+
+    public function calculateDiscountPrice($salesPrice)
+    {
+        if ($this->discount_amount && $this->discount_type) {
+            switch ($this->discount_type) {
+                case 'percent':
+                    return $salesPrice - ($salesPrice * ($this->discount_amount / 100));
+                case 'flat':
+                    return $salesPrice - $this->discount_amount;
+            }
+        }
+
+        return $salesPrice; // Return the original price if no discount is applicable
+    }
+
+    public function getB2bDiscountPriceAttribute()
+    {
+        return $this->calculateDiscountPrice($this->retailer_sales_price);
+    }
+
+    public function getB2cDiscountPriceAttribute()
+    {
+        return $this->calculateDiscountPrice($this->customer_sales_price);
     }
 }

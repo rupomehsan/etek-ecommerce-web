@@ -20,13 +20,7 @@ class All
 
             $data = self::$model::query()->where('user_id', auth()->user()->id);
 
-            if (request()->has('search') && request()->input('search')) {
-                $searchKey = request()->input('search');
-                $data = $data->where(function ($q) use ($searchKey) {
-                    $q->where('title', $searchKey);
-                    $q->orWhere('description', 'like', '%' . $searchKey . '%');
-                });
-            }
+
 
             if (request()->has('get_all') && (int)request()->input('get_all') === 1) {
                 $data = $data
@@ -35,13 +29,7 @@ class All
                     ->where('status', $status)
                     ->limit($pageLimit)
                     ->orderBy($orderByColumn, $orderByType)
-                    ->get()
-                    ->map(function ($item) {
-                        if ($item->product->type == 'medicine') {
-                            $item->product->load(['medicine_product', 'medicine_product_verient']);
-                        }
-                        return $item;
-                    });
+                    ->get();
             } else {
                 $data = $data
                     ->with($with)

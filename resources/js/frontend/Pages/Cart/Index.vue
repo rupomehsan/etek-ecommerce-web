@@ -1,6 +1,6 @@
 <template>
     <Layout>
-        <div class="breadcrumb-main ">
+        <div class="breadcrumb-main">
             <div class="container">
                 <div class="row">
                     <div class="col">
@@ -8,9 +8,15 @@
                             <div>
                                 <h2>cart</h2>
                                 <ul>
-                                    <li><a href="javascript:void(0)">home</a></li>
-                                    <li><i class="fa fa-angle-double-right"></i></li>
-                                    <li><a href="javascript:void(0)">cart</a></li>
+                                    <li>
+                                        <a href="javascript:void(0)">home</a>
+                                    </li>
+                                    <li>
+                                        <i class="fa fa-angle-double-right"></i>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)">cart</a>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -36,67 +42,112 @@
 
                             <tbody>
                                 <template v-if="all_cart_data.length > 0">
-                                    <tr v-for="cart in all_cart_data" :key="cart.id">
-                                        <td><a href="javascript:void(0)" @click="remove_cart_item(cart.id)"
-                                                class="icon"><i class="ti-close"></i></a></td>
-                                        <td class="d-flex justify-content-center">
-                                            <div class="bg-dummy-image"
-                                                style="height: 100px;width: 100px;background-color: white;">
-                                                <Link :href="`/product-details/${cart?.product?.slug}`">
-                                                <img class="w-100 h-100"
-                                                    :src="load_image(`${cart.product.product_image?.url}`)" alt="cart">
+                                    <tr
+                                        v-for="cart in all_cart_data"
+                                        :key="cart.id"
+                                    >
+                                        <td>
+                                            <a
+                                                href="javascript:void(0)"
+                                                @click="
+                                                    remove_cart_item(cart.id)
+                                                "
+                                                class="icon"
+                                                ><i class="ti-close"></i
+                                            ></a>
+                                        </td>
+                                        <td
+                                            class="d-flex justify-content-center"
+                                        >
+                                            <div
+                                                class="bg-dummy-image"
+                                                style="
+                                                    height: 100px;
+                                                    width: 100px;
+                                                    background-color: white;
+                                                "
+                                            >
+                                                <Link
+                                                    :href="`/product-details/${cart?.product?.slug}`"
+                                                >
+                                                    <img
+                                                        class="w-100 h-100"
+                                                        :src="
+                                                            load_image(
+                                                                `${cart.product.product_image?.url}`
+                                                            )
+                                                        "
+                                                        alt="cart"
+                                                    />
                                                 </Link>
                                             </div>
                                         </td>
                                         <td style="width: 100px">
-                                            <Link :href="`/product-details/${cart?.product?.slug}`">{{
-                                                cart.product.title }}
+                                            <Link
+                                                :href="`/product-details/${cart?.product?.slug}`"
+                                                >{{ cart.product.title }}
                                             </Link>
-
                                         </td>
                                         <td>
-                                            <h2>{{ get_price(cart.product).new_price }} ৳ </h2>
+                                            <h2>
+                                                {{
+                                                    get_price(cart.product)
+                                                        .new_price
+                                                }}
+                                                ৳
+                                            </h2>
                                         </td>
                                         <td>
-                                            <template v-if="cart.product.type == 'medicine'">
-                                                <div class="qty-box">
-                                                    <div class="input-group">
-                                                        <select
-                                                            @change="cart_quantity_update(cart.id, null, $event.target.value)"
-                                                            name="quantity" id="" class="form-select"
-                                                            v-model="cart.quantity">
-                                                            <option
-                                                                v-for="data in cart.product?.medicine_product_verient?.pv_b2c_max_qty"
-                                                                :key="data" :value="data">
-                                                                {{ data }} x {{
-                                                                    cart.product?.medicine_product_verient?.pu_b2c_sales_unit_label
-                                                                }}
-                                                            </option>
-                                                        </select>
-                                                    </div>
+                                            <div
+                                                class="qty-box"
+                                                style="margin-right: 0"
+                                            >
+                                                <div class="input-group">
+                                                    <button
+                                                        class="qty-minus"
+                                                        @click="
+                                                            AdujustQuantity(
+                                                                cart.id,
+                                                                'minus',
+                                                                cart.quantity
+                                                            )
+                                                        "
+                                                    ></button>
+                                                    <input
+                                                        class="qty-adj form-control"
+                                                        type="number"
+                                                        min="1"
+                                                        :value="cart.quantity"
+                                                    />
+                                                    <button
+                                                        class="qty-plus"
+                                                        @click="
+                                                            AdujustQuantity(
+                                                                cart.id,
+                                                                'plus',
+                                                                cart.quantity
+                                                            )
+                                                        "
+                                                    ></button>
                                                 </div>
-                                            </template>
-                                            <template v-else>
-                                                <div class="qty-box">
-                                                    <div class="input-group">
-                                                        <input type="number" name="quantity" min="1"
-                                                            class="form-control input-number" v-model="cart.quantity"
-                                                            @keyup="
-                                                                cart_quantity_update(
-                                                                    cart.id,
-                                                                    null,
-                                                                    $event.target.value
-                                                                )
-                                                                ">
-                                                    </div>
-                                                </div>
-                                            </template>
-
+                                                <h5 class="mx-3">
+                                                    {{
+                                                        cart?.product
+                                                            ?.product_unit
+                                                            ?.title
+                                                    }}
+                                                </h5>
+                                            </div>
                                         </td>
 
                                         <td>
                                             <h2 class="td-color">
-                                                {{ cart.quantity * get_price(cart.product).new_price }} ৳
+                                                {{
+                                                    cart.quantity *
+                                                    get_price(cart.product)
+                                                        .new_price
+                                                }}
+                                                ৳
                                             </h2>
                                         </td>
                                     </tr>
@@ -105,13 +156,13 @@
                                 <template v-else>
                                     <tr>
                                         <td colspan="6">
-                                            <h2 class="td-color text-center">No item found in cart</h2>
+                                            <h2 class="td-color text-center">
+                                                No item found in cart
+                                            </h2>
                                         </td>
                                     </tr>
                                 </template>
-
                             </tbody>
-
                         </table>
                         <table class="table cart-table table-responsive-md">
                             <tfoot>
@@ -127,8 +178,14 @@
                 </div>
                 <div class="row cart-buttons">
                     <div class="col-12">
-                        <Link href="/" class="btn btn-normal">continue shopping</Link>
-                        <Link v-if="all_cart_data.length > 0" href="/checkout" class="btn btn-normal ms-3">check out
+                        <Link href="/" class="btn btn-normal"
+                            >continue shopping</Link
+                        >
+                        <Link
+                            v-if="all_cart_data.length > 0"
+                            href="/checkout"
+                            class="btn btn-normal ms-3"
+                            >check out
                         </Link>
                     </div>
                 </div>
@@ -157,9 +214,22 @@ export default {
             cart_quantity_update: "cart_quantity_update",
         }),
         ...mapActions(auth_store, {
-            "check_is_auth": "check_is_auth",
+            check_is_auth: "check_is_auth",
         }),
         load_image: window.load_image,
+
+        AdujustQuantity: function (id, type, quantity) {
+            let UPquantity = quantity;
+            if (type == "plus") {
+                UPquantity++;
+            } else {
+                if (UPquantity > 1) {
+                    UPquantity--;
+                }
+            }
+
+            this.cart_quantity_update(id, type, quantity);
+        },
     },
 
     computed: {
@@ -169,7 +239,7 @@ export default {
             get_price: "get_price",
         }),
         ...mapState(auth_store, {
-            "is_auth": "is_auth",
+            is_auth: "is_auth",
         }),
     },
 };

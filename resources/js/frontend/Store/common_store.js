@@ -16,6 +16,7 @@ export const common_store = defineStore("common_store", {
             "title",
             "customer_sales_price",
             "discount_type",
+"retailer_sales_price",
             "discount_amount",
             "product_brand_id",
             "sku",
@@ -246,68 +247,18 @@ export const common_store = defineStore("common_store", {
                 is_auth: "is_auth",
             });
 
-            if (product.type == "medicine") {
-
-                if (product.medicine_product_verient?.pv_b2c_discount_percent) {
-                    new_price = Math.round(product.medicine_product_verient?.pv_b2c_price)
-                    old_price = Math.round(product.medicine_product_verient?.pv_b2c_mrp)
-                } else {
-                    old_price = Math.round(product.medicine_product_verient?.pv_b2c_mrp)
-                }
-
-            } else if (product.type == "product") {
-
-                if (product.is_discount) {
-                    new_price = Math.round(product.current_price)
-                    old_price = Math.round(product.customer_sales_price)
-                } else {
-                    new_price = Math.round(product.current_price)
-                }
-            }
-
             if (authStore.is_auth()) {
                 let userType = authStore.auth_info().role?.name;
                 if (userType == 'customer') {
-                    if (product.type == "medicine") {
-
-                        if (product.medicine_product_verient?.pv_b2c_discount_percent) {
-                            new_price = Math.round(product.medicine_product_verient?.pv_b2c_price)
-                            old_price = Math.round(product.medicine_product_verient?.pv_b2c_mrp)
-                        } else {
-                            old_price = Math.round(product.medicine_product_verient?.pv_b2c_mrp)
-                        }
-
-                    } else if (product.type == "product") {
-                        if (product.is_discount) {
-                            new_price = Math.round(product.current_price)
-                            old_price = Math.round(product.customer_sales_price)
-                        } else {
-                            old_price = Math.round(product.customer_sales_price)
-                        }
-                    }
+                    new_price = Math.round(product.b2c_discount_price)
+                    old_price = Math.round(product.customer_sales_price)
                 } else if (userType == 'retailer') {
-
-                    if (product.type == "medicine") {
-
-                        if (product.medicine_product_verient?.pv_b2b_discount_percent) {
-                            new_price = Math.round(product.medicine_product_verient?.pv_b2b_price)
-                            old_price = Math.round(product.medicine_product_verient?.pv_b2b_mrp)
-                        } else {
-                            old_price = Math.round(product.medicine_product_verient?.pv_b2b_mrp)
-                        }
-
-                    } else if (product.type == "product") {
-
-                        if (product.is_discount) {
-                            new_price = Math.round(product.current_price)
-                            old_price = Math.round(product.customer_sales_price)
-                        } else {
-                            old_price = Math.round(product.customer_sales_price)
-                        }
-
-                    }
-
+                    new_price = Math.round(product.b2b_discount_price)
+                    old_price = Math.round(product.retailer_sales_price)
                 }
+            } else {
+                new_price = Math.round(product.b2c_discount_price)
+                old_price = Math.round(product.customer_sales_price)
             }
 
             return {

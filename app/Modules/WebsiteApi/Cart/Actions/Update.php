@@ -14,10 +14,7 @@ class Update
                 return messageResponse('Data not found...', $data, 404, 'error');
             }
 
-            if (request()->has('quantity') && request()->quantity > 0 && request()->quantity != null) {
-                $data->update(['quantity' => request()->quantity]);
-                return messageResponse('Cart updated successfully', $data, 201);
-            }
+
 
             if (request()->has('action') && request()->action != null) {
 

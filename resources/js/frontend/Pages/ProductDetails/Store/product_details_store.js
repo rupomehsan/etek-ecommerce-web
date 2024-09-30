@@ -24,6 +24,7 @@ export const useProductDetailsStore = defineStore("useProductDetailsStore", {
             "short_description",
             "customer_sales_price",
             "discount_type",
+"retailer_sales_price",
             "discount_amount",
             "product_brand_id",
             "sku",
