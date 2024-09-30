@@ -132,7 +132,7 @@
                                                     <label
                                                         class="page-heading m-hide"
                                                     >
-                                                        {{ category.title }}
+                                                        {{ queryParam }}
                                                     </label>
                                                 </div>
                                                 <div
@@ -242,14 +242,28 @@
                                                                 ?.length < 5,
                                                     }"
                                                 >
-                                                    <div
-                                                        v-for="i in products.data"
-                                                        :key="i.id"
+                                                    <template
+                                                        v-if="
+                                                            products?.data
+                                                                ?.length
+                                                        "
                                                     >
-                                                        <ProductItem
-                                                            :product="i"
-                                                        />
-                                                    </div>
+                                                        <div
+                                                            v-for="i in products.data"
+                                                            :key="i.id"
+                                                        >
+                                                            <ProductItem
+                                                                :product="i"
+                                                            />
+                                                        </div>
+                                                    </template>
+                                                    <template v-else>
+                                                        <p
+                                                            class="p-3 alert-danger text-center text-danger"
+                                                        >
+                                                            No Products Found
+                                                        </p>
+                                                    </template>
                                                 </div>
                                             </div>
                                             <div class="product-pagination">
@@ -393,29 +407,32 @@ export default {
     },
     props: ["page"],
 
-    data: () => ({}),
+    data: () => ({
+        queryParam: "",
+    }),
 
     created: async function () {
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
+
         if (urlParams.has("search")) {
-            const searchQuery = urlParams.get("search");
+            this.queryParam = urlParams.get("search");
             this.set_query_param("search");
-            this.set_search_key(searchQuery);
+            this.set_search_key(this.queryParam);
             await this.global_search();
         } else if (urlParams.has("category")) {
-            let queryParam = urlParams.get("category");
-            this.set_slug(queryParam);
+            this.queryParam = urlParams.get("category");
+            this.set_slug(this.queryParam);
             this.set_query_param("category");
             await this.get_products_by_category_id();
         } else if (urlParams.has("top-offer")) {
-            let queryParam = urlParams.get("top-offer");
-            this.set_slug(queryParam);
+            this.queryParam = urlParams.get("top-offer");
+            this.set_slug(this.queryParam);
             this.set_query_param("top-offer");
             await this.get_all_top_offer_products_by_offer_id();
         } else if (urlParams.has("category-group")) {
-            let queryParam = urlParams.get("category-group");
-            this.set_slug(queryParam);
+            this.queryParam = urlParams.get("category-group");
+            this.set_slug(this.queryParam);
             this.set_query_param("category-group");
             await this.get_all_products_and_single_group_by_category_group_id();
         } else {

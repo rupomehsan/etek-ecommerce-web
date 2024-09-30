@@ -11,6 +11,7 @@ use App\Modules\WebsiteApi\UserProfile\Actions\SetDefaultAddress;
 use App\Modules\WebsiteApi\UserProfile\Actions\GetContactPersonByAddressId;
 use App\Modules\WebsiteApi\UserProfile\Actions\GetSingleAddress;
 use App\Modules\WebsiteApi\UserProfile\Actions\AccountInfoUpdate;
+use App\Modules\WebsiteApi\UserProfile\Actions\DeleteAddressByAddressId;
 
 use App\Modules\WebsiteApi\UserProfile\Validations\AddressValidation;
 use App\Modules\WebsiteApi\UserProfile\Validations\PasswordValidation;
@@ -65,6 +66,11 @@ class Controller extends ControllersController
     public function AccountInfoUpdate(Request $request)
     {
         $data = AccountInfoUpdate::execute($request);
+        return $data;
+    }
+    public function DeleteAddressByAddressId($id)
+    {
+        $data = DeleteAddressByAddressId::execute($id);
         return $data;
     }
 

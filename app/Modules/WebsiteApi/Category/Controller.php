@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller as ControllersController;
 
 use App\Modules\WebsiteApi\Category\Actions\GetAllCategoryGroup;
 use App\Modules\WebsiteApi\Category\Actions\GetAllCategoryByCategoryGroupId;
+use App\Modules\WebsiteApi\Category\Actions\GetAllNestedSubCategoryByCategoryId;
+use App\Modules\WebsiteApi\Category\Actions\GetAllNestedGroupCategoryByGroupCategoryId;
 
 use App\Modules\WebsiteApi\Category\Actions\GetAllCategory;
 use App\Modules\WebsiteApi\Category\Actions\GetAllCategoryParent;
@@ -63,8 +65,8 @@ class Controller extends ControllersController
     {
         $data = GetAllNavCategory::execute();
         $response = entityResponse($data);
-        // $response->header('Cache-Control', 'public, max-age=300')
-        //     ->header('Expires', now()->addMinutes(25)->toRfc7231String());
+        $response->header('Cache-Control', 'public, max-age=300')
+            ->header('Expires', now()->addMinutes(25)->toRfc7231String());
         return $response;
     }
     public function GetAllSubCategoryByCategoryId($slug)
@@ -90,6 +92,16 @@ class Controller extends ControllersController
     public function GetMinMaxPriceByCategoryId($slug)
     {
         $data = GetMinMaxPriceByCategoryId::execute($slug);
+        return $data;
+    }
+    public function GetAllNestedSubCategoryByCategoryId($slug)
+    {
+        $data = GetAllNestedSubCategoryByCategoryId::execute($slug);
+        return $data;
+    }
+    public function GetAllNestedGroupCategoryByGroupCategoryId($slug)
+    {
+        $data = GetAllNestedGroupCategoryByGroupCategoryId::execute($slug);
         return $data;
     }
 }

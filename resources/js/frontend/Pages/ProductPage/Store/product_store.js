@@ -25,7 +25,7 @@ export const product_store = defineStore("product_store", {
         max_price: 0,
 
         limit: 20,
-        preloader: true,
+        preloader: false,
 
         price_range: {
             min_price: 0,
@@ -60,6 +60,13 @@ export const product_store = defineStore("product_store", {
     }),
     getters: {},
     actions: {
+
+        reset_search: function () {
+            this.search_key = "",
+                this.category = {},
+                this.brand = {},
+                this.products = []
+        },
         /**
         ## Product information
         ## start
@@ -268,6 +275,9 @@ export const product_store = defineStore("product_store", {
         },
         set_query_param: function (query_param) {
             this.query_param = query_param
+        },
+        updateSearchKey: function (SearchKey) {
+            this.search_key = SearchKey
         }
         /**
         ## Setter

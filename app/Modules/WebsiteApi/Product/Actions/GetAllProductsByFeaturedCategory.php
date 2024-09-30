@@ -42,7 +42,7 @@ class GetAllProductsByFeaturedCategory
                                     $q->select('id', 'product_id', 'url');
                                 },
                                 'medicine_product_verient' => function ($q) {
-                                    $q->select(
+                                     $q->select(
                                         'id',
                                         'product_id',
                                         'pv_mrp',

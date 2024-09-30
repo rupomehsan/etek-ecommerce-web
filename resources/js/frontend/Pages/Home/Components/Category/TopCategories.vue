@@ -11,11 +11,20 @@
                 <skeleton :height="`200px`" :width="`400px`"></skeleton>
             </div>
             <div class="top_categries" v-else>
-
-                <div class="category" v-for="item in all_top_products_offer" :key="item.id">
-                    <Link :href="`offer-products/${item.slug}`" class="category_link">
-                    <div class="title"></div>
-                    <img :src="load_image(`${item.image}`, true)" :alt="`ETEK Top Offer ${item.slug}`">
+                <div
+                    class="category"
+                    v-for="item in all_top_products_offer"
+                    :key="item.id"
+                >
+                    <Link
+                        :href="`products?top-offer=${item.slug}`"
+                        class="category_link"
+                    >
+                        <div class="title"></div>
+                        <img
+                            :src="load_image(`${item.image}`, true)"
+                            :alt="`ETEK Top Offer ${item.slug}`"
+                        />
                     </Link>
                 </div>
                 <!-- <div class="category">
@@ -46,10 +55,20 @@
                 <skeleton :height="`200px`" :width="`400px`"></skeleton>
             </div>
             <div class="top_categries" v-else>
-                <div v-for="(item, index) in all_category_groups" :key="index" class="category">
-                    <Link :href="`/category-group/${item.slug}`" class="category_link">
-                    <div class="title"> {{ item.title }}</div>
-                    <img :src="load_image(item.image, true)" :alt="`ETEK Top Category ${item.title}`" />
+                <div
+                    v-for="(item, index) in all_category_groups"
+                    :key="index"
+                    class="category"
+                >
+                    <Link
+                        :href="`/products?category-group=${item.slug}`"
+                        class="category_link"
+                    >
+                        <div class="title">{{ item.title }}</div>
+                        <img
+                            :src="load_image(item.image, true)"
+                            :alt="`ETEK Top Category ${item.title}`"
+                        />
                     </Link>
                 </div>
             </div>
@@ -58,25 +77,23 @@
 </template>
 
 <script>
-import { use_home_page_store } from '../../Store/home_page_store.js';
-import { mapState } from 'pinia';
-import Skeleton from '../../../../Components/Skeleton.vue';
+import { use_home_page_store } from "../../Store/home_page_store.js";
+import { mapState } from "pinia";
+import Skeleton from "../../../../Components/Skeleton.vue";
 export default {
     components: { Skeleton },
-    data: () => ({
-
-    }),
+    data: () => ({}),
     methods: {
         load_image: window.load_image,
     },
     computed: {
         ...mapState(use_home_page_store, {
-            all_category_groups: 'all_category_groups',
-            all_top_products_offer: 'all_top_products_offer',
-            preloader: 'preloader',
-        })
-    }
-}
+            all_category_groups: "all_category_groups",
+            all_top_products_offer: "all_top_products_offer",
+            preloader: "preloader",
+        }),
+    },
+};
 </script>
 
 <style></style>

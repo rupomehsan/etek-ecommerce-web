@@ -15,16 +15,17 @@ class Controller extends ControllersController
     {
         $data = HeroSlider::execute();
         $response = entityResponse($data);
-        // $response->header('Cache-Control', 'public, max-age=3000')
-        //     ->header('Expires', now()->addMinutes(60)->toRfc7231String());
+        $response->header('Cache-Control', 'public, max-age=3000')
+            ->header('Expires', now()->addMinutes(60)->toRfc7231String());
         return $response;
     }
+
     public function HeroSliderSideBanner()
     {
         $data = HeroSliderSideBanner::execute();
         $response = entityResponse($data);
-        // $response->header('Cache-Control', 'public, max-age=60')
-        //     ->header('Expires', now()->addMinutes(60)->toRfc7231String());
+        $response->header('Cache-Control', 'public, max-age=60')
+            ->header('Expires', now()->addMinutes(60)->toRfc7231String());
         return $response;
     }
 }

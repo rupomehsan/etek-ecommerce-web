@@ -24,6 +24,8 @@ use App\Modules\WebsiteApi\Product\Actions\GetAllSuperSaveProducts;
 use App\Modules\WebsiteApi\Product\Actions\GetAllFlashSaleProducts;
 use App\Modules\WebsiteApi\Product\Actions\GetAllPopulerProducts;
 use App\Modules\WebsiteApi\Product\Actions\GetAllOfferProducts;
+use App\Modules\WebsiteApi\Product\Actions\GetAllProductsByFeaturedCategory;
+use App\Modules\WebsiteApi\Product\Actions\GetAllTopOffersWithProducts;
 
 class Controller extends ControllersController
 {
@@ -130,6 +132,16 @@ class Controller extends ControllersController
     public function GetAllOfferProducts()
     {
         $data = GetAllOfferProducts::execute();
+        return $data;
+    }
+    public function GetAllProductsByFeaturedCategory()
+    {
+        $data = GetAllProductsByFeaturedCategory::execute();
+        return $data;
+    }
+    public function GetAllTopOffersWithProducts()
+    {
+        $data = GetAllTopOffersWithProducts::execute();
         return $data;
     }
 }

@@ -18,6 +18,7 @@ class GetSingleOrderDetails
             $orderInfo = self::$model::with(
                 'order_products',
                 'order_products.product_image',
+                'order_products.product:id,slug',
                 'order_delivery_address:id,address,district_id,division_id,station_id',
                 'order_delivery_address.division:id,name',
                 'order_delivery_address.district:id,name',

@@ -14,5 +14,6 @@ Route::prefix('v1')->middleware('auth:api')->group(function () {
 
     Route::post('set-default-address', [Controller::class, 'SetDefaultAddress']);
     Route::get('get-contact-person-by-address-id/{id}', [Controller::class, 'GetContactPersonByAddressId']);
+    Route::get('delete-user-address-by-id/{id}', [Controller::class, 'DeleteAddressByAddressId']);
     Route::get('get-single-address/{id}', [Controller::class, 'GetSingleAddress']);
 });

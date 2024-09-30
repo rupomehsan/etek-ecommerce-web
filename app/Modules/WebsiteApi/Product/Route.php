@@ -17,6 +17,7 @@ Route::prefix('v1')->group(function () {
     Route::get('get-all-products-by-brand-id/{slug}', [Controller::class, 'GetAllProductsByBrandId']);
 
     Route::get('get-all-products-by-category-id/{slug}', [Controller::class, 'GetAllProductsByCategoryId']);
+    Route::get('get-all-products-by-featured-category', [Controller::class, 'GetAllProductsByFeaturedCategory']);
     Route::get('get-all-products-by-category-id-with-verient-and-brand/{slug}', [Controller::class, 'GetAllProductsByCategoryIdWithVerientAndBrand']);
 
     Route::get('get-all-top-product-offer', [Controller::class, 'GetAllProductOffers']);
@@ -31,6 +32,7 @@ Route::prefix('v1')->group(function () {
     Route::get('get-all-flash-sale-products', [Controller::class, 'GetAllFlashSaleProducts']);
     Route::get('get-all-super-save-products', [Controller::class, 'GetAllSuperSaveProducts']);
     Route::get('get-all-offer-products', [Controller::class, 'GetAllOfferProducts']);
+    Route::get('get-all-top-offers-with-products', [Controller::class, 'GetAllTopOffersWithProducts']);
 
 
 });

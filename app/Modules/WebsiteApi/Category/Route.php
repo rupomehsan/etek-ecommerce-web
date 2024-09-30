@@ -14,6 +14,8 @@ Route::prefix('v1')->group(function () {
     Route::get('get-all-nav-categories', [Controller::class, 'GetAllNavCategory']);
 
     Route::get('get-all-sub-category-by-category-id/{slug}', [Controller::class, 'GetAllSubCategoryByCategoryId']);
+    Route::get('get-all-nested-sub-category-by-category-id/{slug}', [Controller::class, 'GetAllNestedSubCategoryByCategoryId']);
+    Route::get('get-all-nested-group-category-by-category-group-id/{slug}', [Controller::class, 'GetAllNestedGroupCategoryByGroupCategoryId']);
     Route::get('get-advertise-by-category-id/{slug}', [Controller::class, 'GetAdvertiseByCategoryId']);
     Route::get('get-brands-by-category-id/{slug}', [Controller::class, 'GetBrandsByCategoryId']);
     Route::get('get-varients-by-category-id/{slug}', [Controller::class, 'GetVarientsByCategoryId']);

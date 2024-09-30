@@ -14,7 +14,7 @@ class GetSingleCategoryGroupWithProduct
             $orderByType = request()->input('sort_type') ?? 'asc';
             $status = request()->input('status') ?? 'active';
             $fields = request()->input('fields') ?? '*';
-            $with = ['product_categories', 'product_image:id,product_id,url', 'product_categories:id,title', 'product_brand:id,title'];
+            $with = ['product_image:id,product_id,url', 'product_categories:id,title', 'product_brand:id,title'];
             $condition = [];
 
             $categoryGroup = self::$categoryGroupModel::query()->where('slug', $slug)->first();
@@ -23,11 +23,16 @@ class GetSingleCategoryGroupWithProduct
                 return messageResponse('Category group not found', $slug, 404, 'error');
             }
 
-
             $data = self::$ProductModel::query()
                 // ->where('is_available', 1)
-                ->whereHas('product_category_group_products', function ($query) use ($categoryGroup) {
-                    $query->where('product_category_group_id', $categoryGroup->id);
+                // ->whereHas('product_category_group_products', function ($query) use ($categoryGroup) {
+                //     $query->where('product_category_group_id', $categoryGroup->id);
+                // });
+
+                ->whereExists(function ($query) use ($categoryGroup) {
+                    $query->from('product_category_products')
+                        ->whereColumn('product_category_products.product_id', 'products.id')
+                        ->where('product_category_products.product_category_group_id', $categoryGroup->id);
                 });
 
             if (request()->has('get_all') && (int)request()->input('get_all') === 1) {
@@ -48,7 +53,6 @@ class GetSingleCategoryGroupWithProduct
                     ->orderBy($orderByColumn, $orderByType)
                     ->paginate($pageLimit);
             }
-
             $response = [
                 'categoryGroup' => $categoryGroup,
                 "data" => $data

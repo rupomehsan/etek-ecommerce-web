@@ -4,9 +4,9 @@
             <li class="category_modal_close" @click="close_category">
                 <i class="fa fa-close"></i>
             </li>
-            
+
             <li v-for="category in side_nav_categories" :key="category.id">
-                <Link :href="`/products/${category.slug}`">
+                <Link :href="`/products?category=${category.slug}`">
                     <img :src="load_image(`${category.image}`)" :alt="category.title">
                     <span class="link_title">
                         {{ category.title }}

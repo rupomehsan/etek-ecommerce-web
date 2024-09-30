@@ -14,6 +14,9 @@ class HomePageGlobalSearch
             // dd(request()->all());
 
             $searchKey = request()->input('search_key');
+            $limit = request()->input('limit');
+            $orderByColumn = request()->input('sort_by_col') ?? 'id';
+            $orderByType = request()->input('sort_type') ?? 'desc';
 
             $product = self::$productModel::with('product_image:product_id,url')
                 ->where(function ($q) use ($searchKey) {
@@ -33,7 +36,8 @@ class HomePageGlobalSearch
                     "type"
                 ])
                 ->where("status", "active")
-                ->paginate(request()->paginate ? request()->paginate : 12);
+                ->orderBy($orderByColumn, $orderByType)
+                ->paginate($limit);
 
             $product->getCollection()->map(function ($item) {
                 if ($item->type == "medicine") {
@@ -64,9 +68,8 @@ class HomePageGlobalSearch
                 $q->orWhere('title', 'like', '%' . $searchKey . '%');
                 $q->orWhere('search_keywords', 'like', '%' . $searchKey . '%');
             })
-                ->limit(10)
                 ->where("status", "active")
-                ->paginate(10, ['title', 'slug', 'image']);
+                ->paginate($limit, ['title', 'slug', 'image']);
 
             $category->appends('search_key', $searchKey);
 
@@ -74,9 +77,8 @@ class HomePageGlobalSearch
                 $q->where('title', $searchKey);
                 $q->orWhere('title', 'like', '%' . $searchKey . '%');
             })
-                ->limit(10)
                 ->where("status", "active")
-                ->paginate(10, ['title', 'slug', 'image']);
+                ->paginate($limit, ['title', 'slug', 'image']);
 
             $brand->appends('search_key', $searchKey);
 

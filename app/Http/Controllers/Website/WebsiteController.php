@@ -50,11 +50,10 @@ class WebsiteController extends Controller
         ]);
     }
 
-    public function products($slug)
+    public function products()
     {
 
-        return Inertia::render('Products/Index', [
-            'slug' => $slug,
+        return Inertia::render('ProductPage/Index', [
             'event' => [
                 'title' => $category->title ?? 'ETEK - Products' . ' price in bangladesh',
                 'image' => 'https://etek.com.bd/cache/frontend/images/etek_logo.png',

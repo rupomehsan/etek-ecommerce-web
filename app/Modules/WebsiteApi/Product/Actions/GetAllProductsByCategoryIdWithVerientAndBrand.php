@@ -28,8 +28,7 @@ class GetAllProductsByCategoryIdWithVerientAndBrand
                 return messageResponse('Data not found...', $slug, 404, 'error');
             }
 
-            $products = $category->products()
-                ->with('product_image');
+            $products = $category->products()->with('product_image');
             if ($varient_value_id) {
                 $products->whereHas('product_verient_price', function ($q) use ($varient_value_id) {
                     if ($varient_value_id) {
@@ -41,8 +40,8 @@ class GetAllProductsByCategoryIdWithVerientAndBrand
                 $products->whereIn('product_brand_id', $brand_id);
             }
 
-            $min_price = $products->clone()->orderBy('customer_sales_price', 'ASC')->where("customer_sales_price", ">", 0)->first()->customer_sales_price ?? 0;
-            $max_price = $products->clone()->orderBy('customer_sales_price', 'DESC')->where("customer_sales_price", ">", 0)->first()->customer_sales_price ?? 0;
+            $min_price = $category->products()->orderBy('customer_sales_price', 'ASC')->where("customer_sales_price", ">", 0)->first()->customer_sales_price ?? 0;
+            $max_price = $category->products()->orderBy('customer_sales_price', 'DESC')->where("customer_sales_price", ">", 0)->first()->customer_sales_price ?? 0;
 
             if (request()->min && request()->max) {
                 $products->whereBetween('customer_sales_price', [request()->min, request()->max])
@@ -56,7 +55,7 @@ class GetAllProductsByCategoryIdWithVerientAndBrand
             $childrens = $category->childrens()->get();
 
             $products->setPath("/category/" . $slug);
-
+            $cache_minuites = 0;
             return response()->json([
                 "category" => $category,
                 "products" => $products,
@@ -64,8 +63,9 @@ class GetAllProductsByCategoryIdWithVerientAndBrand
                 "childrens" => $childrens,
                 "min_price" => $min_price,
                 "max_price" => $max_price,
+                "t" => $category->products()->orderBy('id','desc')->first(),
             ])->header('Cache-Control', 'public, max-age=300')
-                ->header('Expires', now()->addMinutes(60)->toRfc7231String());
+                ->header('Expires', now()->addMinutes($cache_minuites)->toRfc7231String());
         } catch (\Exception $e) {
             return messageResponse($e->getMessage(), [], 500, 'server_error');
         }
