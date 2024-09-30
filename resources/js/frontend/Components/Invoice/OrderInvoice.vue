@@ -14,6 +14,7 @@
                                 Invoice #: <span class="fw-bold"> {{ order_info.order_id }}</span><br />
                                 Date : {{ new Date(order_info.created_at).toDateString() }}<br />
                                 Payment status : {{ order_info.paid_status }}<br />
+                                Payment method : {{ order_info.payment_method }}<br />
                             </td>
                         </tr>
                     </table>

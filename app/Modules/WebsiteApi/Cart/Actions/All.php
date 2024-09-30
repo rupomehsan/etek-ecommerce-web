@@ -15,7 +15,11 @@ class All
             $orderByType = request()->input('sort_type')    ?? 'asc';
             $status = request()->input('status') ?? 'active';
             $fields = request()->input('fields') ?? '*';
-            $with = ['product:id,slug,title,purchase_price,customer_sales_price,type,discount_type,discount_amount', 'product.product_image:id,product_id,url'];
+            $with = [
+                'product:id,slug,title,purchase_price,retailer_sales_price,customer_sales_price,type,discount_type,discount_amount,product_unit_id',
+                'product.product_image:id,product_id,url',
+                'product.product_unit:id,title'
+            ];
             $condition = [];
 
             $data = self::$model::query()->where('user_id', auth()->user()->id);

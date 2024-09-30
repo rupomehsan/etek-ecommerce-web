@@ -135,7 +135,7 @@
 
             </div>
             <div class="search_action">
-                <Link :href="`/search-results?search_key=${search_key}`" :preserve-state="true" :preserve-scroll="true">
+                <Link :href="`/?search_key=${search_key}`" :preserve-state="true" :preserve-scroll="true">
                 See all results
                 </Link>
             </div>

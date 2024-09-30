@@ -30,13 +30,8 @@ class EcommerceOrder
                 ->get();
 
             $cartSubtotal = $cartItems->sum(function ($cartItem) use ($userType) {
-                if ($cartItem->product_type == 'medicine') {
-                    $medicinePrice = $userType == config('role.customer') ? $cartItem->product->medicine_product_verient->pv_b2c_price : $cartItem->product->medicine_product_verient->pv_b2b_price;
-                    return $medicinePrice * $cartItem->quantity;
-                } else {
-                    return $cartItem->product->current_price * $cartItem->quantity;
-                }
-                return 0;
+                $Price = $userType == config('role.customer') ? $cartItem->product->b2c_discount_price : $cartItem->product->b2b_discount_price;
+                return $Price * $cartItem->quantity ?? 0;
             });
 
             $total = $cartSubtotal;
@@ -59,6 +54,7 @@ class EcommerceOrder
                 "user_id" => auth()->user()->id,
                 "is_delivered" => 0,
                 "delivery_address_details" => ($delivery_address_details),
+                "present_address" =>  $request->present_address,
                 "order_status" => 'pending',
                 "delivery_method" => "home_delivery",
                 "delivery_charge" => $orderDetails["delivery_charge"] ?? 0,
@@ -79,15 +75,16 @@ class EcommerceOrder
             if ($order = self::$model::create($orderInfo)) {
                 $product_items = "";
                 foreach ($cartItems as $key => $cartItem) {
+                    $Price = $userType == config('role.customer') ? $cartItem->product->b2c_discount_price : $cartItem->product->b2b_discount_price;
 
                     self::$orderProductmodel::create([
                         'sales_ecommerce_order_id' => $order->id,
                         'product_id' => $cartItem->product_id,
-                        'product_price' => $cartItem->product->type == 'medicine' ? $cartItem->product->medicine_price : $cartItem->product->current_price,
+                        'product_price' => $Price,
                         'product_name' => $cartItem->product->title,
                         'discount_type' => null,
                         'tax' => null,
-                        'price' => $cartItem->product->type == 'medicine' ? $cartItem->product->medicine_price : $cartItem->product->current_price,
+                        'price' => $Price,
                         'qty' => $cartItem->quantity,
                         'subtotal' => $order->subtotal,
                         'tax_total' =>  0,

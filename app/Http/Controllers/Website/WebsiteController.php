@@ -53,11 +53,8 @@ class WebsiteController extends Controller
     public function products($slug)
     {
 
-        $category = DB::table('product_categories')->select('title', 'slug')->where('slug', $slug)->first();
-        $page = request()->page ? request()->page : 1;
         return Inertia::render('Products/Index', [
             'slug' => $slug,
-            'page' => $page,
             'event' => [
                 'title' => $category->title ?? 'ETEK - Products' . ' price in bangladesh',
                 'image' => 'https://etek.com.bd/cache/frontend/images/etek_logo.png',
