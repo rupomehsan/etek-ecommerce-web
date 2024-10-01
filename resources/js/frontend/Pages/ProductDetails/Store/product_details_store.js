@@ -24,7 +24,7 @@ export const useProductDetailsStore = defineStore("useProductDetailsStore", {
             "short_description",
             "customer_sales_price",
             "discount_type",
-"retailer_sales_price",
+            "retailer_sales_price",
             "discount_amount",
             "product_brand_id",
             "sku",
@@ -50,8 +50,8 @@ export const useProductDetailsStore = defineStore("useProductDetailsStore", {
             // console.log(this.product_initial_data);
         },
         get_related_generic_products: async function () {
-            // const fieldsQuery = this.fields.map((field, index) => `fields[${index}]=${field}`).join('&');
-            let response = await axios.get(`/get-related-generic-products/${this.slug}`)
+            const fieldsQuery = this.fields.map((field, index) => `fields[${index}]=${field}`).join('&');
+            let response = await axios.get(`/get-related-generic-products/${this.slug}?${fieldsQuery}`)
             if (response.data.status === "success") {
                 this.related_generic_products_data = response.data.data
             }

@@ -242,10 +242,19 @@ export const common_store = defineStore("common_store", {
             let old_price = 0;
             let new_price = 0;
 
+            if (!product) {
+                return {
+                    old_price: old_price,
+                    new_price: new_price
+                }
+            }
+
             let authStore = mapState(auth_store, {
                 auth_info: "auth_info",
                 is_auth: "is_auth",
             });
+
+
 
             if (authStore.is_auth()) {
                 let userType = authStore.auth_info().role?.name;

@@ -23,7 +23,7 @@ class GetRelatedGenericProduct
             $condition = [];
 
             $data = self::$ProductModel::query()->with($with)->where('slug', $slug)->first();
-            $genericProduct = self::$ProductModel::query()->with($with)->where('slug', '!=', $slug)->where('product_medicine_generic_id', $data->product_medicine_generic_id)->limit($pageLimit)->get();
+            $genericProduct = self::$ProductModel::select($fields)->with($with)->where('slug', '!=', $slug)->where('product_medicine_generic_id', $data->product_medicine_generic_id)->limit($pageLimit)->get();
 
 
             return entityResponse($genericProduct);

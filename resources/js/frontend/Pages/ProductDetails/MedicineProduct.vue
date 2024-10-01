@@ -587,7 +587,7 @@
                                 <span class="offer-price-title"
                                     >Current price:
                                 </span>
-                                <span class="offer-main-price">
+                                <span class="offer-main-price mx-2">
                                     {{ get_price(product_details).new_price }}
                                     BDT
                                 </span>
@@ -649,6 +649,7 @@
                     </div>
 
                     <div
+                       v-if="product_details.is_available && get_price(product)?.new_price > 0"
                         class="product-buttons ps-3 d-flex flex-wrap gap-2 mt-2"
                     >
                         <button
@@ -674,6 +675,10 @@
                             <i class="fa fa-heart" aria-hidden="true"></i>
                         </a>
                     </div>
+                    <div v-else class="product-buttons ps-3 d-flex flex-wrap gap-2 mt-2 text-warning">
+                        Unavailable
+                    </div>
+
                     <hr />
                     <div
                         class="d-flex justify-content-between px-3 border-b1-grey300 align-items-center"

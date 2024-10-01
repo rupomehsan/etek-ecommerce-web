@@ -227,6 +227,11 @@ class Model extends EloquentModel
 
     public function calculateDiscountPrice($salesPrice)
     {
+
+        if (!$salesPrice) {
+            return 0;
+        }
+
         if ($this->discount_amount && $this->discount_type) {
             switch ($this->discount_type) {
                 case 'percent':

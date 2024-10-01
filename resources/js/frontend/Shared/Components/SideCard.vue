@@ -14,47 +14,77 @@
                 <ul class="cart_product">
                     <li v-for="cart in all_cart_data" :key="cart.id">
                         <div class="media">
-                            <Link :href="`/product-details/${cart?.product?.slug}`" class="dummy-image-render">
-                            <img class="me-3" :src="load_image(`${cart.product.product_image?.url}`)" />
+                            <Link
+                                :href="`/product-details/${cart?.product?.slug}`"
+                                class="dummy-image-render"
+                            >
+                                <img
+                                    class="me-3"
+                                    :src="
+                                        load_image(
+                                            `${cart.product.product_image?.url}`
+                                        )
+                                    "
+                                />
                             </Link>
                             <div class="media-body">
-                                <Link :href="`/product-details/${cart?.product?.slug}`">
-                                <h4>{{ cart?.product?.title }}</h4>
+                                <Link
+                                    :href="`/product-details/${cart?.product?.slug}`"
+                                >
+                                    <h4>{{ cart?.product?.title }}</h4>
                                 </Link>
                                 <h6 class="d-flex gap-1">
                                     <p>
-                                        {{ get_price(cart?.product).new_price }} ৳
+                                        {{ get_price(cart?.product).new_price }}
+                                        ৳
                                     </p>
-                                    <p class="text-decoration-line-through text-secondary">
-                                        {{ get_price(cart?.product).old_price }} ৳
+                                    <p
+                                        v-if="
+                                            cart?.product?.is_discount &&
+                                            cart?.product?.discount_amount > 0
+                                        "
+                                        class="text-decoration-line-through text-secondary"
+                                    >
+                                        {{ get_price(cart?.product).old_price }}
+                                        ৳
                                     </p>
-
                                 </h6>
                                 <div class="addit-box">
                                     <div class="qty-box">
                                         <div class="input-group">
-                                            <button class="qty-minus" @click="
-                        cart_quantity_update(
-                            cart.id,
-                            'minus',
-                            null
-                        )
-                        "></button>
-                                            <input class="qty-adj form-control" type="number" min="1"
-                                                v-model="cart.quantity" @keyup="
-                        cart_quantity_update(
-                            cart.id,
-                            null,
-                            $event.target.value
-                        )
-                        " />
-                                            <button class="qty-plus" @click="
-                        cart_quantity_update(
-                            cart.id,
-                            'plus',
-                            null
-                        )
-                        "></button>
+                                            <button
+                                                class="qty-minus"
+                                                @click="
+                                                    cart_quantity_update(
+                                                        cart.id,
+                                                        'minus',
+                                                        null
+                                                    )
+                                                "
+                                            ></button>
+                                            <input
+                                                class="qty-adj form-control"
+                                                type="number"
+                                                min="1"
+                                                v-model="cart.quantity"
+                                                @keyup="
+                                                    cart_quantity_update(
+                                                        cart.id,
+                                                        null,
+                                                        $event.target.value
+                                                    )
+                                                "
+                                            />
+                                            <button
+                                                class="qty-plus"
+                                                @click="
+                                                    cart_quantity_update(
+                                                        cart.id,
+                                                        'plus',
+                                                        null
+                                                    )
+                                                "
+                                            ></button>
                                         </div>
                                     </div>
                                     <div class="pro-add">
@@ -70,17 +100,40 @@
                                                 </path>
                                             </svg>
                                         </a> -->
-                                        <a href="javascript:void(0)" @click="remove_cart_item(cart.id)">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                                stroke-linecap="round" stroke-linejoin="round"
-                                                class="feather feather-trash-2">
-                                                <polyline points="3 6 5 6 21 6"></polyline>
+                                        <a
+                                            href="javascript:void(0)"
+                                            @click="remove_cart_item(cart.id)"
+                                        >
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                width="24"
+                                                height="24"
+                                                viewBox="0 0 24 24"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                stroke-width="2"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                class="feather feather-trash-2"
+                                            >
+                                                <polyline
+                                                    points="3 6 5 6 21 6"
+                                                ></polyline>
                                                 <path
-                                                    d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
-                                                </path>
-                                                <line x1="10" y1="11" x2="10" y2="17"></line>
-                                                <line x1="14" y1="11" x2="14" y2="17"></line>
+                                                    d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
+                                                ></path>
+                                                <line
+                                                    x1="10"
+                                                    y1="11"
+                                                    x2="10"
+                                                    y2="17"
+                                                ></line>
+                                                <line
+                                                    x1="14"
+                                                    y1="11"
+                                                    x2="14"
+                                                    y2="17"
+                                                ></line>
                                             </svg>
                                         </a>
                                     </div>
@@ -90,7 +143,6 @@
                     </li>
                 </ul>
                 <ul class="cart_total">
-
                     <li>
                         <div class="total">
                             total<span> {{ total_cart_price }} ৳</span>
@@ -98,9 +150,12 @@
                     </li>
                     <li>
                         <div class="buttons">
-                            <Link href="/cart" class="btn btn-solid btn-sm">view cart
+                            <Link href="/cart" class="btn btn-solid btn-sm"
+                                >view cart
                             </Link>
-                            <Link href="/checkout" class="btn btn-solid btn-sm">checkout</Link>
+                            <Link href="/checkout" class="btn btn-solid btn-sm"
+                                >checkout</Link
+                            >
                         </div>
                     </li>
                 </ul>
@@ -114,24 +169,20 @@ import { common_store } from "../../Store/common_store";
 import { auth_store } from "../../Store/auth_store";
 
 export default {
-
     data: () => ({
-        user_type: 'customer'
+        user_type: "customer",
     }),
 
     methods: {
-
         ...mapActions(common_store, {
             get_all_cart_data: "get_all_cart_data",
             remove_cart_item: "remove_cart_item",
             cart_quantity_update: "cart_quantity_update",
         }),
         load_image: window.load_image,
-
     },
 
     computed: {
-
         ...mapState(common_store, {
             all_cart_data: "all_cart_data",
             total_cart_price: "total_cart_price",
@@ -139,28 +190,25 @@ export default {
         }),
 
         ...mapState(auth_store, {
-            "auth_info": "auth_info",
+            auth_info: "auth_info",
         }),
-
-
     },
     watch: {
         is_auth: {
             handler: function () {
                 if (this.is_auth) {
-                    this.user_type = this.auth_info?.role?.name ?? 'customer';
+                    this.user_type = this.auth_info?.role?.name ?? "customer";
                 }
             },
             immediate: true,
         },
     },
-
 };
 </script>
 
 <style>
 .dummy-image-render {
-    background-image: url('/dummy.png');
+    background-image: url("/dummy.png");
     height: 40px;
     width: 80px;
     background-repeat: no-repeat;
