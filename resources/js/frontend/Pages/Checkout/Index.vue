@@ -465,6 +465,7 @@ import { computed, ref } from "vue";
 export default {
     components: { Layout },
     data: () => ({
+        user_info: {},
         user_address_info: {},
 
         isSelectDistrictDisabled: true,
@@ -487,11 +488,11 @@ export default {
         address: "",
     }),
 
-    setup() {
-        const authStore = auth_store();
-        const user_info = computed(() => authStore.auth_info);
-        return { user_info };
-    },
+    // setup() {
+    //     const authStore = auth_store();
+    //     const user_info = computed(() => authStore.auth_info);
+    //     return { user_info };
+    // },
 
     created: async function () {
         const authStore = auth_store();
@@ -508,6 +509,11 @@ export default {
                 this.user_address_info.forEach((element) => {
                     if (element.is_default == 1) {
                         defaultAddress = element;
+                        if (element.contact_persons?.length) {
+                            this.user_info = element.contact_persons[0];
+                        } else {
+                            this.user_info = authStore.auth_info;
+                        }
                     }
                 });
 
