@@ -6,14 +6,14 @@
                 <div class="product-front">
                     <img :src="load_image(`${product.product_image?.url}`, true, true)
                         " class="img-fluid" />
-                    <a v-if="product.is_available" @click="is_auth ? buyNow(product.id) : openAccount()"
+                    <a v-if="product.is_available && get_price(product)?.new_price > 0" @click="is_auth ? buyNow(product.id) : openAccount()"
                         class="buy_now_btn c-pointer">
                         <i class="icon-shopping-cart icon"></i>
                         Buy Now
                     </a>
                 </div>
                 </Link>
-                <div class="product-icon" v-if="product.is_available">
+                <div class="product-icon" v-if="product.is_available && get_price(product)?.new_price > 0">
                     <button @click="is_auth ? add_to_cart(product.id) : openAccount()" title="add to cart"
                         class="tooltip-left" data-tippy-content="Add to cart" tabindex="0">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"

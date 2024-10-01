@@ -501,28 +501,36 @@ export default {
             this.$inertia.visit("/login");
         } else {
             await this.all_division();
+
             this.user_address_info = authStore.auth_info?.user_delivery_address;
-            this.state_division_id =
-                this.user_address_info?.state_division_id ?? 3;
-            this.district_id = this.user_address_info?.district_id;
-            this.station_id = this.user_address_info?.station_id;
-            this.address = this.user_info?.user_delivery_address?.address;
+            if (this.user_address_info.length) {
+                let defaultAddress = {};
+                this.user_address_info.forEach((element) => {
+                    if (element.is_default == 1) {
+                        defaultAddress = element;
+                    }
+                });
+
+                this.state_division_id = defaultAddress.state_division_id;
+                this.district_id = defaultAddress.district_id;
+                this.station_id = defaultAddress.station_id;
+                this.address = defaultAddress.address;
+            } else {
+                this.state_division_id = 3;
+            }
 
             this.getDeliveryCharge = this.get_setting_value(
                 "delivery_charge",
                 true
             );
+
             if (this.getDeliveryCharge && this.getDeliveryCharge.length >= 2) {
                 this.inside_dhaka = this.getDeliveryCharge[0].value || 0;
                 this.outside_dhaka = this.getDeliveryCharge[1].value || 0;
                 this.delivery_charge = this.inside_dhaka;
             }
 
-            if (this.state_division_id !== 3) {
-                this.delivery_charge = this.outside_dhaka;
-            } else {
-                this.delivery_charge = this.inside_dhaka;
-            }
+            this.set_division_id(this.state_division_id);
         }
     },
 
@@ -550,6 +558,13 @@ export default {
                 ) {
                     this.checkoutPopUp(response.data);
                 }
+            }
+        },
+        set_division_id: function (state_division_id) {
+            if (state_division_id !== 3) {
+                this.delivery_charge = this.outside_dhaka;
+            } else {
+                this.delivery_charge = this.inside_dhaka;
             }
         },
 
