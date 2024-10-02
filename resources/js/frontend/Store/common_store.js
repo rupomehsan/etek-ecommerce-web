@@ -191,14 +191,14 @@ export const common_store = defineStore("common_store", {
 
         get_setting_value: function (key, multiple = false) {
             // this.preloader = true;
-            let is_empty = false;
-            if (this.website_settings_data.length == 0) {
-                is_empty = true;
-            }
+            // let is_empty = false;
+            // if (this.website_settings_data.length == 0) {
+            //     is_empty = true;
+            // }
 
             try {
                 if (!multiple) {
-                    if (is_empty) return '';
+                    // if (is_empty) return '';
 
                     let data = ''
                     let value = this.website_settings_data.find(item => item.title === key);
@@ -208,9 +208,11 @@ export const common_store = defineStore("common_store", {
                     }
                     return data
                 } else {
-                    if (is_empty) return [];
+                    // if (is_empty) return [];
+
 
                     let values = this.website_settings_data.filter(item => item.title === key);
+
                     if (values && values.length > 0) {
                         return values[0].setting_values;
                         // this.preloader = false;

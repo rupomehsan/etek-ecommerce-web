@@ -87,7 +87,7 @@ class EcommerceOrder
                         'tax' => null,
                         'price' => $Price,
                         'qty' => $cartItem->quantity,
-                        'subtotal' => $order->subtotal,
+                        'subtotal' => $cartItem->quantity * $Price,
                         'tax_total' =>  0,
                         'total' => $order->total,
                     ]);

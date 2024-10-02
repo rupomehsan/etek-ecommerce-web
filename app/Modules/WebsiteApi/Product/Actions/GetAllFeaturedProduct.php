@@ -2,6 +2,8 @@
 
 namespace App\Modules\WebsiteApi\Product\Actions;
 
+use Carbon\Carbon;
+
 class GetAllFeaturedProduct
 {
     static $ProductModel = \App\Modules\ProductManagement\Product\Models\Model::class;
@@ -18,7 +20,10 @@ class GetAllFeaturedProduct
             $with = ['product_image:id,product_id,url', 'product_categories:id,title', 'product_brand:id,title'];
             $condition = [];
 
-            $data = self::$ProductModel::query()->where('is_featured', 1)->where('is_available', 1);
+            $data = self::$ProductModel::query()
+                ->where('is_featured', 1)
+                ->where('is_available', 1)
+                ->where('created_at', '>=', Carbon::now()->subDays(10));
 
             if (request()->has('get_all') && (int)request()->input('get_all') === 1) {
 

@@ -649,7 +649,7 @@
                     </div>
 
                     <div
-                       v-if="product_details.is_available && get_price(product)?.new_price > 0"
+                       v-if="product_details.is_available && get_price(product_details)?.new_price > 0"
                         class="product-buttons ps-3 d-flex flex-wrap gap-2 mt-2"
                     >
                         <button

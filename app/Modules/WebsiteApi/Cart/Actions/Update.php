@@ -14,10 +14,6 @@ class Update
                 return messageResponse('Data not found...', $data, 404, 'error');
             }
 
-            if (request()->has('quantity') && request()->quantity > 0 && request()->quantity != null) {
-                $data->update(['quantity' => request()->quantity]);
-                return messageResponse('Cart updated successfully', $data, 201);
-            }
 
             if (request()->has('action') && request()->action != null) {
 
@@ -31,9 +27,10 @@ class Update
                     $data->increment('quantity');
                 }
                 return messageResponse('Cart updated successfully', $data, 201);
+            } else {
+                $data->update(['quantity' => request()->quantity]);
+                return messageResponse('Cart updated successfully', $data, 201);
             }
-
-
         } catch (\Exception $e) {
             return messageResponse($e->getMessage(), [], 500, 'server_error');
         }

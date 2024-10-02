@@ -14,9 +14,9 @@ class Store
             // dd(request()->all());
 
             $isCartExist = self::$model::where('product_id', request()->product_id)->where('user_id', auth()->user()->id)->first();
-            $product = self::$productModel::where('id', request()->product_id)->first();
+
             if ($isCartExist) {
-                $isCartExist->quantity = $isCartExist->quantity + request()->quantity;
+                $isCartExist->quantity = $isCartExist->quantity + 1;
                 $isCartExist->save();
                 return messageResponse('Cart Quantity updated', $isCartExist, 200);
             }
@@ -24,8 +24,7 @@ class Store
             $requestData = [
                 'product_id' => request()->product_id,
                 'quantity' => request()->quantity ?? 1,
-                'user_id' =>  auth()->id() ,
-                'product_type' =>  $product->type ?? 'product',
+                'user_id' =>  auth()->id(),
             ];
 
             $data = self::$model::query()->create($requestData);

@@ -483,7 +483,7 @@ export default {
         payment_link: "",
         outside_dhaka: 0,
         inside_dhaka: 0,
-        getDeliveryCharge: null,
+        getDeliveryCharge: [],
 
         address: "",
     }),
@@ -517,7 +517,7 @@ export default {
                     }
                 });
 
-                this.state_division_id = defaultAddress.state_division_id;
+                this.state_division_id = defaultAddress.state_division_id ?? 3;
                 this.district_id = defaultAddress.district_id;
                 this.station_id = defaultAddress.station_id;
                 this.address = defaultAddress.address;
@@ -525,16 +525,7 @@ export default {
                 this.state_division_id = 3;
             }
 
-            this.getDeliveryCharge = this.get_setting_value(
-                "delivery_charge",
-                true
-            );
-
-            if (this.getDeliveryCharge && this.getDeliveryCharge.length >= 2) {
-                this.inside_dhaka = this.getDeliveryCharge[0].value || 0;
-                this.outside_dhaka = this.getDeliveryCharge[1].value || 0;
-                this.delivery_charge = this.inside_dhaka;
-            }
+            this.set_delivery_charge();
 
             this.set_division_id(this.state_division_id);
         }
@@ -566,11 +557,24 @@ export default {
                 }
             }
         },
-        set_division_id: function (state_division_id) {
-            if (state_division_id !== 3) {
-                this.delivery_charge = this.outside_dhaka;
-            } else {
+        set_delivery_charge: async function () {
+            this.getDeliveryCharge = this.get_setting_value(
+                "delivery_charge",
+                true
+            );
+
+            if (this.getDeliveryCharge && this.getDeliveryCharge.length >= 2) {
+                this.inside_dhaka = this.getDeliveryCharge[0].value || 0;
+                this.outside_dhaka = this.getDeliveryCharge[1].value || 0;
                 this.delivery_charge = this.inside_dhaka;
+            }
+            
+        },
+        set_division_id: function (state_division_id) {
+            if (state_division_id == 3) {
+                this.delivery_charge = this.inside_dhaka;
+            } else {
+                this.delivery_charge = this.outside_dhaka;
             }
         },
 
