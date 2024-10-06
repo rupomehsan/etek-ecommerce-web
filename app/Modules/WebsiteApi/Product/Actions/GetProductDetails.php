@@ -17,6 +17,7 @@ class GetProductDetails
 
 
             $with = [
+                
                 'product_images:id,product_id,url',
                 'product_categories:id,title,slug',
                 'product_brand:id,title',
@@ -35,6 +36,7 @@ class GetProductDetails
 
                 'product_varient_price.product_varient_group_title:id,title',
                 'product_varient_price.product_varient_values:id,title',
+
             ];
 
             $fields = request()->input('fields') ?? ['*'];

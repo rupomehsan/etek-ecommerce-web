@@ -109,10 +109,7 @@ class Model extends EloquentModel
     {
         return $this->hasOne(self::$MedicineProductModel, 'product_id', 'id');
     }
-    public function medicine_product_verient()
-    {
-        return $this->hasOne(self::$MedicineProductVerientModel, 'product_id', 'id');
-    }
+
     public function medicine_generic()
     {
         return $this->belongsTo(self::$MedicineGenericModel, 'product_medicine_generic_id',  'id');
@@ -217,7 +214,7 @@ class Model extends EloquentModel
     public function getIsDiscountAttribute()
     {
         // if ($this->discount_type == 'off') {
-        if ($this->discount_amount || $this->medicine_product_verient?->pv_b2c_discount_percent || $this->medicine_product_verient?->pv_b2b_discount_percent) {
+        if ($this->discount_amount && $this->discount_type) {
             return true;
         } else {
             return false;

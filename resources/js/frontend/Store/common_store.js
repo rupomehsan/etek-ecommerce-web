@@ -210,7 +210,7 @@ export const common_store = defineStore("common_store", {
                 } else {
                     // if (is_empty) return [];
 
-
+                    console.log("sv",this.website_settings_data);
                     let values = this.website_settings_data.filter(item => item.title === key);
 
                     if (values && values.length > 0) {

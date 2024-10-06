@@ -30,7 +30,7 @@
                                     @click="setDefault(item.id)"
                                     title="Set as default delivery address"
                                     :class="
-                                        item.is_default
+                                        item.is_default == 1
                                             ? 'text-danger fw-bold border rounded p-1 btn-normal'
                                             : 'text-secondary'
                                     "

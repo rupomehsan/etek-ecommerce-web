@@ -33,6 +33,8 @@ class Model extends EloquentModel
     {
         return $q->where('status', 'active');
     }
-
-   
+    public function offer_products()
+    {
+        return $this->belongsToMany(self::$ProductModel, 'product_offer_product', 'product_offer_id', 'product_id');
+    }
 }

@@ -45,22 +45,14 @@
                                             <div
                                                 class="form-group col-md-12 col-sm-16 col-xs-12"
                                             >
-                                                <input
-                                                    type="hidden"
-                                                    name="address_id"
-                                                    :value="
-                                                        user_info
-                                                            ?.user_delivery_address
-                                                            ?.id
-                                                    "
-                                                    id=""
-                                                />
                                                 <label>User full Name</label>
                                                 <input
                                                     type="text"
                                                     name="user_name"
                                                     id="user_name"
-                                                    :value="`${user_info?.name}`"
+                                                    :value="`${
+                                                        user_info?.name ?? ''
+                                                    }`"
                                                     placeholder=""
                                                 />
                                             </div>
@@ -76,7 +68,8 @@
                                                     name="phone"
                                                     id="phone"
                                                     :value="
-                                                        user_info?.phone_number
+                                                        user_info?.phone_number ??
+                                                        ''
                                                     "
                                                     placeholder=""
                                                 />
@@ -91,7 +84,9 @@
                                                     type="text"
                                                     name="email"
                                                     id="email"
-                                                    :value="user_info?.email"
+                                                    :value="
+                                                        user_info?.email ?? ''
+                                                    "
                                                     placeholder=""
                                                 />
                                             </div>
@@ -490,13 +485,15 @@ export default {
 
     // setup() {
     //     const authStore = auth_store();
-    //     const user_info = computed(() => authStore.auth_info);
+    //     this.user_info = computed(() => authStore.auth_info);
     //     return { user_info };
     // },
 
     created: async function () {
         const authStore = auth_store();
         await authStore.check_is_auth();
+
+        this.user_info = authStore.auth_info;
 
         if (!authStore.is_auth) {
             this.$inertia.visit("/login");
@@ -511,8 +508,6 @@ export default {
                         defaultAddress = element;
                         if (element.contact_persons?.length) {
                             this.user_info = element.contact_persons[0];
-                        } else {
-                            this.user_info = authStore.auth_info;
                         }
                     }
                 });
@@ -524,6 +519,8 @@ export default {
             } else {
                 this.state_division_id = 3;
             }
+
+            console.log("ath", this.user_info);
 
             this.set_delivery_charge();
 
@@ -568,7 +565,8 @@ export default {
                 this.outside_dhaka = this.getDeliveryCharge[1].value || 0;
                 this.delivery_charge = this.inside_dhaka;
             }
-            
+
+            console.log(this.inside_dhaka, this.outside_dhaka);
         },
         set_division_id: function (state_division_id) {
             if (state_division_id == 3) {

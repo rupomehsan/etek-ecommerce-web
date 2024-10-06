@@ -41,30 +41,6 @@ class GetAllProductsByFeaturedCategory
                                 'product_image' => function ($q) {
                                     $q->select('id', 'product_id', 'url');
                                 },
-                                'medicine_product_verient' => function ($q) {
-                                     $q->select(
-                                        'id',
-                                        'product_id',
-                                        'pv_mrp',
-                                        'pv_b2c_discounted_price',
-                                        'pv_b2c_min_qty',
-                                        'pv_b2c_max_qty',
-                                        'pv_b2b_discounted_price',
-                                        'pv_b2b_min_qty',
-                                        'pu_base_unit_multiplier',
-                                        'pu_b2c_base_unit_multiplier',
-                                        'pu_b2b_base_unit_multiplier',
-                                        'pu_b2c_sales_unit_id',
-                                        'pu_b2b_sales_unit_id',
-                                        'pv_b2c_discount_percent',
-                                        'pv_b2b_discount_percent',
-                                        'pv_b2b_max_qty',
-                                        'pv_b2c_price',
-                                        'pv_b2c_mrp',
-                                        'pv_b2b_price',
-                                        'pv_b2b_mrp'
-                                    );
-                                }
                             ]);
                     }
                 ])->get();
