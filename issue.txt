@@ -4,4 +4,10 @@ planing->
 https://www.figma.com/board/Z1zR8GkTgQ0ndyR1dzMx3L/mega-ecommerce?node-id=0-1&t=3Fdy4buL2bfNwCyQ-0
 
 
-need a model for search key word  field (title) all search( keyword) will be store here-dn
+get-all-top-offers-with-products - not found
+get-all-summer-sale-products
+get-all-populer-products
+get-all-flash-sale-products
+get-all-super-save-products
+get-all-offer-products
+get-all-products-by-featured-category
