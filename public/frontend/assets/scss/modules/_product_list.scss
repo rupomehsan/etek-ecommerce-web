@@ -1,0 +1,27 @@
+.product_list {
+    gap: 35px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+
+    &.product_left {
+        grid-template-columns: repeat(auto-fit, minmax(210px, 250px));
+    }
+
+    >div {
+        height: 100%;
+
+        >div {
+            height: 100%;
+        }
+    }
+
+    @media screen and (max-width: 400px) {
+        gap: 10px;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    }
+
+    @media (min-width: 400px) and (max-width: 991.9px) {
+        gap: 10px;
+        grid-template-columns: repeat(auto-fit, minmax(171px, 1fr));
+    }
+}

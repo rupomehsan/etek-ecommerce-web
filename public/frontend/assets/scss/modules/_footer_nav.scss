@@ -1,0 +1,108 @@
+.nav_list {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    margin: 0 auto;
+    // max-width: 768px;
+    z-index: 99;
+    background-color: #212e37;
+
+    display: none;
+
+    @media (max-width: 991px) {
+        display: block;
+    }
+
+    ul {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0px;
+
+        li {
+            width: 60px;
+            position: relative;
+
+            a {
+                text-align: center;
+                display: block;
+                color: white;
+                position: relative;
+
+                i {
+                    display: block;
+                }
+
+                span {
+                    display: block;
+                    font-size: 11px;
+                    padding-top: 2px;
+                    text-transform: capitalize;
+                }
+
+            }
+
+            .logo {
+                overflow-x: hidden;
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                /* border: 1px solid red; */
+                height: 85px;
+                top: -59px;
+                z-index: 999;
+                width: 95px;
+
+                .logo_image {
+                    height: 70px;
+                    width: 70px;
+                    border-radius: 50%;
+                    object-fit: contain;
+                    object-position: left;
+                    padding: 10px;
+                    position: absolute;
+                    background-color: #212e37;
+                    bottom: -82px;
+                    left: 50%;
+                    box-sizing: border-box;
+                    transform: translateX(-50%);
+                    z-index: 9;
+                    border: 1px solid #384955;
+
+                    img {
+                        height: 100%;
+                        width: 100%;
+                        object-fit: contain;
+                    }
+                }
+
+                a {
+
+                    .shape_1,
+                    .shape_2,
+                    .shape_3 {
+                        position: absolute;
+                    }
+
+                    .shape_1 {
+                        height: 43px;
+                        width: 223px;
+                        position: absolute;
+                        background: #212e37;
+                        z-index: 8;
+                        left: -8px;
+                        top: -5px;
+                        --mask:
+                            radial-gradient(39.6px at 50% 56px, #000 99%, #0000 101%) calc(50% - 56px) 0/112px 100%,
+                            radial-gradient(39.6px at 50% -28px, #0000 99%, #000 101%) 50% 28px/112px 100% repeat-x;
+                        -webkit-mask: var(--mask);
+                        mask: var(--mask);
+                    }
+                }
+            }
+        }
+    }
+}
+

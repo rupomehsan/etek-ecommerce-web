@@ -1,0 +1,85 @@
+db->
+https://whimsical.com/super-shop-9cLLFVwKp4NenNMAVV8tq5
+planing->
+https://www.figma.com/board/Z1zR8GkTgQ0ndyR1dzMx3L/mega-ecommerce?node-id=0-1&t=3Fdy4buL2bfNwCyQ-0
+------------------------------------------------
+
+need a model for search key word  field (title) all search( keyword) will be store here-dn
+
+tag management ->title -dn
+tag product cateogry tag management -dn
+tag product  tag management-dn
+tag blog  tag management-dn
+tag website  tag management-dn
+
+
+product faq -> product_id , questions , ans, user_id, is_approved-dn
+
+product retaled products -> product_id ,related_product_id-dn
+
+product price rivew products -> product_id ,related_product_id - new-dn
+
+category retaled products -> category_id ,related_product_id-dn
+
+related compare products -> product_id ,related_product_id-dn
+
+
+
+
+
+
+=--------------
+product region table -produt_id counyry id -dn
+product table warrenty column add ,vidio url yt,warenty policy,guaranty policy,is_trend-dn
+user wish list table user_id, product_id,-dn
+user card list table user_id, product_id,-dn
+user compare list table user_id, product_id,-dn
+user review table userid productid rating description-dn
+
+todaysoffer table -> date,title,discount percent,product id,-dn
+
+accesor running price ,percentage -dn
+
+
+
+kon url theke current url a ashse oitar track
+
+
+category static pages 4 ta
+
+blog dynamic
+
+
+
+
+
+
+
+----command issue----
+
+command default value set
+search er somoy fields boasano lagbe
+unsigned add kora
+------------------------
+
+
+------------------------
+settings niya kaj kora lagbe
+
+seo table for full site (table)
+
+dynamic site map
+
+website url slug
+
+order product exchange management
+
+
+------27-7--
+
+* - sms provider
+* - email provider
+* - telegram bot
+* - payment gateway
+* - email deye subscripber form frontend ->table name subscribers
+* - setting and setting value

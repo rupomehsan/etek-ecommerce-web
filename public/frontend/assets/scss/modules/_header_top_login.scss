@@ -1,0 +1,60 @@
+.header_right_profile {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+
+    img{
+        height: 35px;
+    }
+
+    .cart {
+        position: relative;
+
+        @media (max-width: 600px) {
+            display: none;
+        }
+
+        .cart_count {
+            position: absolute;
+            border: 1px solid black;
+            font-size: 11px;
+            height: 20px;
+            min-width: 20px;
+            max-width: 30px;
+            text-align: center;
+            line-height: 20px;
+            top: -12px;
+            z-index: 9999;
+            background: #fea832;
+            color: black;
+            border-radius: 4px;
+            right: -8px;
+            font-weight: 600;
+            padding: 0px 4px;
+        }
+
+    }
+
+    .auth {
+        a {
+            color: #757575;
+            display: inline-block;
+            margin-left: 5px;
+            line-height: 40px;
+            font-size: 18px;
+            display: flex;
+            gap: 6px;
+            align-items: center;
+
+            &:hover {
+                color: black;
+            }
+
+            div{
+                display: flex;
+                align-items: center;
+                gap: 5px;
+            }
+        }
+    }
+}

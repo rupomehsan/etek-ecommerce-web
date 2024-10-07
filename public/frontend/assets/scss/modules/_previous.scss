@@ -1,0 +1,114 @@
+.bn {
+    font-family: "Tiro Bangla", "PT Sans", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+header {
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 99;
+    background: white;
+    box-shadow: 0px -6px 16px #00000070;
+}
+
+@media (max-width: 991.9px) {
+    .marquee_body {
+        font-size: 13px;
+        padding: 10px;
+    }
+
+    .section_gap {
+        padding: 30px 0px;
+    }
+
+    .section_title {
+        .text {
+            font-size: 18px;
+        }
+    }
+}
+
+.layout-header2 .main-menu-block .menu-nav {
+    display: none;
+    @media (max-width: 991.9px) {
+        display: none;
+    }
+}
+
+.carousel__pagination {
+    position: absolute;
+    top: calc(100% - 26px);
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+
+@media (max-width: 767px) {
+    .footer1 .footer-main>div:nth-child(n+3) {
+        margin-top: 30px;
+    }
+}
+
+.footer-box {
+    @media (max-width: 991.9px) {
+        margin-top: 30px;
+    }
+}
+
+@media (max-width: 1199px) {
+    .layout-header2 {
+        background-color: white;
+    }
+}
+
+.section_title {
+    .text {
+        font-size: 30px;
+        text-transform: uppercase;
+        color: #3e3e3e;
+
+        @media (max-width: 574.9px) {
+            font-size: 25px;
+        }
+    }
+}
+
+.tap-top.top-cls {
+    @media (max-width: 500px) {
+        display: none !important;
+    }
+}
+
+.contact-page .theme-form {
+    background-color: white;
+    border: 0;
+    padding: 20px;
+}
+
+.checkout-page .checkout-form .check-out .form-group:last-child label {
+    margin-bottom: 10px;
+}
+
+.checkout-page .checkout-form textarea {
+    height: 100px;
+}
+
+@media (max-width: 420px) {
+    .checkout-page .checkout-form textarea {
+        height: 100px;
+    }
+}
+
+@media (max-width: 480px) {
+    .contact-page .theme-form input {
+        margin-bottom: 0;
+    }
+}
+
+@media (max-width: 420px) {
+    .checkout-page .checkout-form .form-group {
+        margin-bottom: 10px;
+    }
+}
